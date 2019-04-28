@@ -13,7 +13,7 @@
          "patterns": ["Thanks", "Thank you", "That's helpful"],
          "responses": ["Your welcome!", "Any time!", "My pleasure"]
         },
-	{"tag": "noanswer",
+    {"tag": "noanswer",
          "patterns": [""],
          "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"]
         },
@@ -24,26 +24,26 @@
         {"tag": "flowers",
          "patterns": ["I would like to buy flowers", "I want to buy a flower","What are the flowers you have?", "What kinds of flowers are there?", "What do you have?" ],
          "responses": ["We have Rose, Tulip and Daisy, which one you prefer?", "Rose, Tulip and Daisy, which one do you like?"],
-	 "context_set": "buyflower"
+     "context_set": "buyflower"
         },
         {"tag": "payments",
          "patterns": ["credit cards", "Do you take credit cards?", "Do you accept Mastercard?", "Are you cash only?" ],
          "responses": ["We accept VISA, Mastercard and AMEX", "We accept most major credit cards"]
         },
-	{"tag": "rose",
+    {"tag": "rose",
          "patterns": ["rose flowers", "roses", "rose" ],
          "responses": ["Rose is a lovely flower!"],
-	 "context_filter": "buyflower"
+     "context_filter": "buyflower"
         },
-	{"tag": "tulip",
+    {"tag": "tulip",
          "patterns": ["tulip flowers", "tulips", "tulip" ],
          "responses": ["Tulip is the best one!"],
-	 "context_filter": "buyflower"
+     "context_filter": "buyflower"
         },
-	{"tag": "daisy",
+    {"tag": "daisy",
          "patterns": ["daisy flowers", "daisy"],
          "responses": ["I love Daisy too!"],
-	 "context_filter": "buyflower"
+     "context_filter": "buyflower"
         },
         {"tag": "opentoday",
          "patterns": ["Are you open today?", "When do you open today?", "What are your hours today?"],
