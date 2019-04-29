@@ -1,4 +1,22 @@
 const messengerService = require('../service/messengerService');
+const renderer = require('../render/renderer');
+
+function renderHtml(req, res, userSchema) {
+    const userId = req.query['userId'];
+    console.log('Rendering for user: ')
+    return userSchema.findOne({ 'userId': userId })
+        .then(function(user) {
+            const renderedContent = renderer.render(user.answers);
+            console.log('Rendered content: ', renderedContent);
+
+            res.status(200)
+                .set('Content-Type', 'text/html')
+                .send(renderedContent);
+        }, function (error) {
+            console.error('Error getting user: ', error);
+            res.sendStatus(400);
+        });
+}
 
 function verifyServer(req, res) {
 
@@ -64,5 +82,6 @@ function handleWebhookEvent(req, res) {
 
 module.exports = {
     verifyServer: verifyServer,
-    handleWebhookEvent: handleWebhookEvent
+    handleWebhookEvent: handleWebhookEvent,
+    renderHtml
 }

@@ -1,5 +1,5 @@
 const assert = require('assert');
-const display = require('./format/html-formatter')
+const htmlFormatter = require('./render/html-formatter')
 
 const testRawContent = `
 <html>
@@ -23,7 +23,7 @@ const formattedContent = `
 `;
 
 it('should replace all specifed all placeholders with values and remove nulls', () => {
-  const returnValue = display.getFormattedContent(
+  const returnValue = htmlFormatter.getFormattedContent(
     testRawContent,
     {
       "shortTextPlaceholder": "My name is Elvis",
