@@ -1,7 +1,6 @@
 let mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     sender_psid: String, // to identify the unique user interaction with the bot
     lessons: [{
         lesson: {
