@@ -6,8 +6,8 @@ const connect = require("./dao/connector");
 // Open DB Connection 
 connect();
 
-let Lesson = require('./dao/models/Lesson');
-let User = require('./dao/models/Lesson');
+let Lesson = require('./dao/models/lesson');
+let User = require('./dao/models/user');
 
 const APIController = require('./controllers/APIController');
 
