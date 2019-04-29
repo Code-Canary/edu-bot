@@ -3,16 +3,19 @@ var User = require("../dao/models/user");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const MessageTemplates = require('./messageTemplates');
-const getRawContents = require('../render/html-formatter').getRawContents; 
+const getRawContents = require('../render/html-formatter').getRawContents;
+const Lesson = require('../dao/models/lesson').Lesson
 
 async function handleMessage(sender_psid, received_message) {
 
-    var user = await User.findOne({ "sender_psid": sender_psid });
+    var user = await User.findOne({ sender_psid: sender_psid }).exec();
+
     if (!user) {
+        console.log("Creating new user...");
         user = new User({
             sender_psid: sender_psid,
         });
-        user.save();
+        user = await user.save();
     }
 
     let response;
@@ -24,30 +27,47 @@ async function handleMessage(sender_psid, received_message) {
         // Create the payload for a basic text message, which
         // will be added to the body of our request to the Send API
 
-        if (user.lessons && user.lessons.length > 0) {
-            const lesson = user.lessons[0];
-            console.log({ progress: lesson.progress });
+        if (!user.lessons || user.lessons.length === 0) {
 
-            if (lesson.progress === 0  && received_message.text === 'Start') {
-                lesson.status = 'in_progress';
+            const lessonOne = await Lesson.findOne();
 
-                user.save();
+            user.lessons.push({
+                lesson_info: lessonOne,
+                status: "in_progress",
+                progress: 0,
+            });
+
+            if (received_message.text === 'Start') {
+                user.lessons[0].progress = user.lessons[0].progress + 1;
 
                 response = constructTextResponse('Hi! So you want to create a homepage?');
-                lesson.progress++;
-                user.save();
-            }
 
-            // Response to: Hi! "So you want to create a homepage?"
-            if (lesson.progress === 1) {
-                if (received_message.text === 'No') {
-                    response = constructTextResponse('Why? :-(');
-                    user.save();
-                } else {
-                    response = constructTextResponse('What do you want your homepage to be about?');
-                    user.save();
-                }
+                user.save();
+
+                postbackResponse = constructResponseMessage(sender_psid, response)
+                callSendAPI(postbackResponse);
+                return;
+            } else {
+                response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
+                postbackResponse = constructResponseMessage(sender_psid, response)
+                callSendAPI(postbackResponse);
+                return;
             }
+        } else if (user.lessons[0].progress == 1) {
+            // Response to: Hi! "So you want to create a homepage?"
+            // if (lesson.progress === 1) {
+            if (received_message.text === 'No') {
+                response = constructTextResponse('Why? :-(');
+                // user.save();
+            } else {
+                response = constructTextResponse('What do you want your homepage to be about?');
+                // user.save();
+            }
+            user.save();
+            postbackResponse = constructResponseMessage(sender_psid, response)
+            callSendAPI(postbackResponse);
+            return;
+            // }
         } else {
             response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
         }
@@ -125,13 +145,13 @@ function constructTextResponse(message) {
 
 function constructTemplateResponse(template) {
     return MessageTemplates[template]({
-      title: '',
-      subtitle: '',
-      buttons: '',
-      image_url: '',
-      url: '',
-      media_type: '',
-      attachment_id: '',
+        title: '',
+        subtitle: '',
+        buttons: '',
+        image_url: '',
+        url: '',
+        media_type: '',
+        attachment_id: '',
     })
 }
 
