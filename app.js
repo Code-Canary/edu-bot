@@ -1,7 +1,3 @@
-import { connect } from "./dao/connector";
-
-connect();
-
 /**
  * Copyright 2017-present, Facebook, Inc. All rights reserved.
  *
@@ -24,7 +20,13 @@ connect();
  */
 
 'use strict';
+
 require('dotenv').config();
+const connect = require("./dao/connector");
+
+// Open DB Connection 
+connect();
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 // Imports dependencies and set up http server
 const

@@ -1,8 +1,18 @@
-import { Mongoose } from "mongoose";
+let mongoose = require('mongoose');
 
-var userSchema = new Mongoose.Schema({
+var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
-});
-var user = Mongoose.model('User', userSchema);
-module.exports = user;
+    user_id: String,
+    lessons: [{
+        lesson: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Lesson'
+        },
+        status: String, // completed, in_progress
+        progress: Number
+    }]
+}, { timestamps: true });
+
+var User = mongoose.model('User', userSchema);
+module.exports = User;

@@ -1,6 +1,8 @@
-import { Mongoose } from "mongoose";
+let mongoose = require('mongoose');
 const url = process.env.MONGODB_URI;
 
-export function connect() {
-    Mongoose.connect(url, { useNewUrlParser: true });
+function connect() {
+    mongoose.connect(url, { useNewUrlParser: true });
 }
+
+module.exports = connect;

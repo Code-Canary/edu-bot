@@ -1,8 +1,18 @@
-import { Mongoose } from "mongoose";
+let mongoose = require('mongoose');
 
-var lessonSchema = new Mongoose.Schema({
+var lessonSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: String,
-});
-var lesson = Mongoose.model('Lesson', lessonSchema);
-module.exports = lesson;
+    questions: [{
+        title: String,
+        answer: String,
+        possible_answers: [String], // used for the multi_choice options
+        type: String, // free_text, multi_choice
+        rendered_image_path: String
+    }],
+    lesson_template: String
+}, { timestamps: true });
+
+var Lesson = mongoose.model('Lesson', lessonSchema);
+
+module.exports = Lesson;
