@@ -39,7 +39,5 @@ app.get('/render', function(req, res) {
   APIController.renderHtml(req, res, User);
 });
 
-constructTemplateResponse('generic');
-
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));

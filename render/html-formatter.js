@@ -24,7 +24,5 @@ exports.getFormattedContent = function(content, placeholders) {
     console.log(tempContent)
   })
 
-  console.log('content', tempContent);
-
   return tempContent;
 };

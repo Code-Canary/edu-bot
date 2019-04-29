@@ -121,8 +121,15 @@ function constructTextResponse(message) {
 }
 
 function constructTemplateResponse(template) {
-    console.log(MessageTemplates[template])
-    return MessageTemplates[template]
+    return MessageTemplates[template]({
+      title: '',
+      subtitle: '',
+      buttons: '',
+      image_url: '',
+      url: '',
+      media_type: '',
+      attachment_id: '',
+    })
 }
 
 
