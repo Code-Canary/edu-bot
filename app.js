@@ -18,7 +18,6 @@ const Question = require('./dao/models/question').Question;
 const APIController = require('./controllers/APIController');
 const getRawContents = require('./render/html-formatter').getRawContents;
 const getFormattedContent = require('./render/html-formatter').getFormattedContent;
-const dummy_questions = require('./render/html-formatter').dummy_questions;
 
 // Call seeder for sample lessons.
 require('./dao/seeder/lessonSeeder');
@@ -35,8 +34,6 @@ const
 // Webhook BOT routes
 app.get('/webhook', APIController.verifyServer);
 app.post('/webhook', APIController.handleWebhookEvent);
-
-getFormattedContent(getRawContents(), dummy_questions);
 
 // Handles rendering of the user homepage
 app.get('/render', function(req, res) {

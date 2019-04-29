@@ -3,20 +3,14 @@ const stringUtils = require('./string-utils');
 const PLACEHOLDER_DELIMITER = '$';
 const DEFAULT_PLACEHOLDER_VALUE = '';
 
-exports.getRawContents = function() {
-  return `
-    <html>
-    div
-    </html>
-    `;
-};
 
-exports.dummy_questions = [
-  {
-    placeholder: 'div',
-    answer: '<div></div>',
-  },
-];
+/**
+ * Fetch user answers from DB, fetch lesson from DB and
+ * feed togetFormattedContent for placeholder replacement
+ */
+exports.getRawContents = function(user_id, lesson_id) {
+
+};
 
 /**
  * Returns HTML with all specified placeholders replaced with their values and
