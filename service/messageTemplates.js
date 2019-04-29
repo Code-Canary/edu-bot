@@ -26,7 +26,20 @@ const generic = function({ title, subtitle, buttons }) {
   };
 };
 
-const button = function({ title, subtitle, buttons }) {
+const quickReply = function({ title, text, postback }) {
+  return {
+    'text': text,
+    'quick_replies':[
+      {
+        'content_type': 'text',
+        'title': title,
+        'payload': '<POSTBACK_PAYLOAD>',
+      },
+    ],
+  };
+};
+
+const button = function({ title, buttons }) {
   return {
     'payload': {
       'template_type': 'button',
@@ -81,6 +94,7 @@ const media = function({ media_type, attachment_id }) {
 
 module.exports = {
   generic,
+  quickReply,
   button,
   list,
   media,
