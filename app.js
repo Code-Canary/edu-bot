@@ -17,6 +17,11 @@ const
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()); // creates express http server
 
+// Handles rendering of the user homepage
+app.get('/render', function (req, res) {
+  APIController.renderHtml(req, res, User);
+})
+
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', APIController.handleWebhookEvent);
 // Accepts GET requests at the /webhook endpoint
