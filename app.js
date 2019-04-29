@@ -24,10 +24,10 @@ require('dotenv').config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 // Imports dependencies and set up http server
 const
-    request = require('request'),
-    express = require('express'),
-    body_parser = require('body-parser'),
-    app = express().use(body_parser.json()); // creates express http server
+  request = require('request'),
+  express = require('express'),
+  body_parser = require('body-parser'),
+  app = express().use(body_parser.json()); // creates express http server
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
@@ -41,8 +41,9 @@ app.post('/webhook', (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(function (entry) {
 
+      console.log(entry);
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);
@@ -101,6 +102,8 @@ app.get('/webhook', (req, res) => {
 
 function handleMessage(sender_psid, received_message) {
   let response;
+
+  console.log("Received message:", received_message);
 
   // Checks if the message contains text
   if (received_message.text) {
@@ -163,19 +166,26 @@ function handlePostback(sender_psid, received_postback) {
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
+    'messaging_type': "RESPONSE",
     'recipient': {
       'id': sender_psid,
     },
     'message': response,
   };
 
+  console.log("Calling send API with params", sender_psid, request_body)
+
   // Send the HTTP request to the Messenger Platform
   request({
-    'uri': 'https://graph.facebook.com/v2.6/me/messages',
+    'uri': 'https://graph.facebook.com/v3.2/me/messages',
     'qs': { 'access_token': PAGE_ACCESS_TOKEN },
     'method': 'POST',
+    'headers': { 'Content-Type': 'application/json' },
     'json': request_body,
   }, (err, res, body) => {
+    console.log("Error:", err);
+    console.log("Result:", res);
+    console.log("Body", body);
     if (!err) {
       console.log('message sent!');
     } else {
