@@ -29,9 +29,11 @@ async function handleMessage(sender_psid, received_message) {
 }
 
 function handlePostback(sender_psid, received_postback) {
-    let response;
+    var response;
     // Get the payload for the postback
     let payload = received_postback.payload;
+
+    console.log("Postback response:", received_postback);
 
     // Set the response based on the postback payload
     if (payload === "yes") {
