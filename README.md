@@ -1,4 +1,16 @@
-# Quick Start Tutorial - Finished Project
+# iCode
+
+Learn to code by building your own website
+
+## Run
+
+1. Install dependencies: `npm install`
+2. Run `npm start`
+
+
+## FB Messenger README
+
+Quick Start Tutorial - Finished Project
 
 This is the final code for the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start). 
 
