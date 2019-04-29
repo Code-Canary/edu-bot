@@ -1,5 +1,7 @@
 let mongoose = require('mongoose');
 
+const questions = require('./part1');
+
 // Require models to seed
 let Lesson = require('../models/lesson').Lesson;
 let Question = require('../models/question').Question;
@@ -20,11 +22,11 @@ let bottomLevelQuestions = [
         rendered_image_path: "",
         branches: [{
             answer: "yes",
-            next_question: null,
+            next_question: questions[0]._id,
         },
         {
             answer: "no>",
-            next_question: null,
+            next_question: questions[1]._id,
         }]
     }),
     new Question({
@@ -44,31 +46,6 @@ let bottomLevelQuestions = [
         type: "multiple_choice",
         rendered_image_path: ""
     })
-];
-
-let questions = [
-    new Question({
-        title: "How do you write a div?",
-        type: "free_text",
-        rendered_image_path: "",
-        branches: [{
-            answer: "<div></div>",
-            next_question: bottomLevelQuestions[0]._id,
-        }]
-    }),
-    new Question({
-        title: "Would you like to create a website for that?",
-        type: "free_text",
-        rendered_image_path: "",
-        branches: [{
-            answer: "yes",
-            next_question: bottomLevelQuestions[1]._id,
-        },
-        {
-            answer: "no",
-            next_question: bottomLevelQuestions[2]._id,
-        }]
-    }),
 ];
 
 let lessons = new Lesson({
