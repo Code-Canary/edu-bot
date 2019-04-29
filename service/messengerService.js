@@ -2,6 +2,7 @@ const request = require("request");
 var User = require("../dao/models/user");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const MessageTemplates = require('./messageTemplates');
 
 async function handleMessage(sender_psid, received_message) {
 
@@ -119,36 +120,14 @@ function constructTextResponse(message) {
     };
 }
 
-function constructTemplateResponse() {
-    return {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [
-                    {
-                        "title": "Is this the right picture?",
-                        "subtitle": "Tap a button to answer.",
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "Yes!",
-                                "payload": "yes",
-                            },
-                            {
-                                "type": "postback",
-                                "title": "No!",
-                                "payload": "no",
-                            },
-                        ],
-                    }],
-            },
-        },
-    };
+function constructTemplateResponse(template) {
+    console.log(MessageTemplates[template])
+    return MessageTemplates[template]
 }
 
 
 module.exports = {
+    constructTemplateResponse,
     handleMessage: handleMessage,
     handlePostback: handlePostback
 }
