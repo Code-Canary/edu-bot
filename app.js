@@ -103,7 +103,7 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response;
 
-  console.log(received_message);
+  console.log("Received message:", received_message);
 
   // Checks if the message contains text
   if (received_message.text) {
@@ -171,6 +171,8 @@ function callSendAPI(sender_psid, response) {
     },
     'message': response,
   };
+
+  console.log("Calling send API with params", sender_psid, request_body)
 
   // Send the HTTP request to the Messenger Platform
   request({
