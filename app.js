@@ -183,6 +183,9 @@ function callSendAPI(sender_psid, response) {
     'headers': { 'Content-Type': 'application/json' },
     'json': request_body,
   }, (err, res, body) => {
+    console.log("Error:", err);
+    console.log("Result:", res);
+    console.log("Body", body);
     if (!err) {
       console.log('message sent!');
     } else {
