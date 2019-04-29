@@ -64,7 +64,7 @@ function callSendAPI(userMessage) {
                 console.log("Message sent to user successfully!");
                 break;
             default:
-                console.error("Unable to send message:", request_body);
+                console.error("Unable to send message:", userMessage);
                 console.error("Received Error:", err);
                 console.error("Response was:", body);
                 break;
