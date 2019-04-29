@@ -20,7 +20,16 @@
  */
 
 'use strict';
+
 require('dotenv').config();
+const connect = require("./dao/connector");
+
+// Open DB Connection 
+connect();
+
+let Lesson = require('./dao/models/Lesson');
+let User = require('./dao/models/Lesson');
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 // Imports dependencies and set up http server
 const
