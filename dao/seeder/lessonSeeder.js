@@ -6,7 +6,7 @@ let Question = require('../models/question').Question;
 
 let bottomLevelQuestions = [
     new Question({
-        title: "How do you write a div?",
+        title: "Now add color to the div",
         type: "free_text",
         rendered_image_path: "",
         branches: [{
@@ -15,7 +15,7 @@ let bottomLevelQuestions = [
         }]
     }),
     new Question({
-        title: "Answwer yes or no",
+        title: "Yaay! What topic?",
         type: "free_text",
         rendered_image_path: "",
         branches: [{
@@ -28,7 +28,7 @@ let bottomLevelQuestions = [
         }]
     }),
     new Question({
-        title: "How can you write css colors?",
+        title: "But why? A website is nice",
         branches: [{
             answer: "Hex Codes",
             next_question: null,
@@ -57,7 +57,7 @@ let questions = [
         }]
     }),
     new Question({
-        title: "Answwer yes or no",
+        title: "Would you like to create a website for that?",
         type: "free_text",
         rendered_image_path: "",
         branches: [{
@@ -110,6 +110,18 @@ mongoose.connection.collections['lessons'].drop(function (err) {
 mongoose.connection.collections['questions'].drop(function (err) {
     console.log('questions collection has been dropped.');
     console.log('Seeding Questions...');
+    bottomLevelQuestions.forEach((bottomQ) => {
+        bottomQ.save((err) => {
+            if (err) {
+                console.log('An error has occurred while seeding Questions');
+                console.log('********************************************');
+                console.log(err);
+            } else {
+                console.log('Questions have been successfully seeded');
+            }
+        });
+    });
+
     questions.forEach((question) => {
         question.save((err) => {
             if (err) {
