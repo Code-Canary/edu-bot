@@ -58,7 +58,7 @@ let lessons = new Lesson({
 console.log('Dropping existing collections');
 
 mongoose.connection.collections['lessons'].drop(function (err) {
-    console.log('lessons  ollection has been dropped.');
+    console.log('lessons collection has been dropped.');
     lessons.save((err) => {
         if (err) {
             console.log('An error has occurred while seeding lessons');
