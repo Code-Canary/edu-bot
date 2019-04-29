@@ -103,6 +103,8 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
   let response;
 
+  console.log(received_message);
+
   // Checks if the message contains text
   if (received_message.text) {
     // Create the payload for a basic text message, which
