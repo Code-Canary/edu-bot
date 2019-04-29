@@ -3,6 +3,7 @@ var User = require("../dao/models/user");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const MessageTemplates = require('./messageTemplates');
+const getRawContents = require('../render/html-formatter').getRawContents; 
 
 async function handleMessage(sender_psid, received_message) {
 
@@ -16,6 +17,8 @@ async function handleMessage(sender_psid, received_message) {
 
     let response;
     var postbackResponse = {};
+
+    getRawContents(sender_psid, null);
 
     if (received_message.text) {
         // Create the payload for a basic text message, which

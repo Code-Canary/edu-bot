@@ -51,9 +51,9 @@ const list = function({ title, subtitle, buttons, image_url, url }) {
           'buttons': [buttons],
           'default_action': {
             'type': 'web_url',
-            'url': '<URL_TO_OPEN_WHEN_ITEM_IS_TAPPED>',
-            'messenger_extensions': '<TRUE | FALSE>',
-            'webview_height_ratio': '<COMPACT | TALL | FULL>',
+            'url': url,
+            'messenger_extensions': 'TRUE',
+            'webview_height_ratio': 'COMPACT',
           },
         },
       ],
