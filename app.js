@@ -11,7 +11,6 @@ let User = require('./dao/models/Lesson');
 
 const APIController = require('./controllers/APIController');
 
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 // Imports dependencies and set up http server
 const
   express = require('express'),

@@ -2,15 +2,18 @@ let mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    user_id: String,
+    sender_psid: String, // to identify the unique user interaction with the bot
     lessons: [{
         lesson: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Lesson'
         },
         status: String, // completed, in_progress
-        progress: Number
+        progress: Number, // count of questions answered for this lesson
+        answers: [{
+            placeholder: String,
+            value: String
+        }]
     }]
 }, { timestamps: true });
 

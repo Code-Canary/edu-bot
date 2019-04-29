@@ -2,7 +2,6 @@ const messengerService = require('../service/messengerService');
 
 function verifyServer(req, res) {
 
-    /** UPDATE YOUR VERIFY TOKEN **/
     const VERIFY_TOKEN = 'double_or_nothing';
 
     // Parse params from the webhook verification request
@@ -34,17 +33,12 @@ function handleWebhookEvent(req, res) {
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
-
         body.entry.forEach(function (entry) {
-
-            console.log(entry);
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
-            console.log('Sender ID: ' + sender_psid);
 
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
