@@ -1,3 +1,7 @@
+import { connect } from "./dao/connector";
+
+connect();
+
 /**
  * Copyright 2017-present, Facebook, Inc. All rights reserved.
  *
