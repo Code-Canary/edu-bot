@@ -1,19 +1,9 @@
 const request = require("request");
 var User = require("../dao/models/user");
+
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 async function handleMessage(sender_psid, received_message) {
-    let response;
-    var postbackResponse = {};
-    if (received_message.text) {
-        // Create the payload for a basic text message, which
-        // will be added to the body of our request to the Send API
-        response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
-    } else if (received_message.attachments) {
-        // Get the URL of the message attachment
-        // let attachment_url = received_message.attachments[0].payload.url;
-        response = constructTemplateResponse();
-    }
 
     var user = await User.findOne({ "sender_psid": sender_psid });
     if (!user) {
@@ -21,6 +11,47 @@ async function handleMessage(sender_psid, received_message) {
             sender_psid: sender_psid,
         });
         user.save();
+    }
+
+    let response;
+    var postbackResponse = {};
+
+    if (received_message.text) {
+        // Create the payload for a basic text message, which
+        // will be added to the body of our request to the Send API
+
+        if (user.lessons && user.lessons.length > 0) {
+            const lesson = user.lessons[0];
+            console.log({ progress: lesson.progress });
+
+            if (lesson.progress === 0  && received_message.text === 'Start') {
+                lesson.status = 'in_progress';
+
+                user.save();
+
+                response = constructTextResponse('Hi! So you want to create a homepage?');
+                lesson.progress++;
+                user.save();
+            }
+
+            // Response to: Hi! "So you want to create a homepage?"
+            if (lesson.progress === 1) {
+                if (received_message.text === 'No') {
+                    response = constructTextResponse('Why? :-(');
+                    user.save();
+                } else {
+                    response = constructTextResponse('What do you want your homepage to be about?');
+                    user.save();
+                }
+            }
+        } else {
+            response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
+        }
+
+    } else if (received_message.attachments) {
+        // Get the URL of the message attachment
+        // let attachment_url = received_message.attachments[0].payload.url;
+        response = constructTemplateResponse('Nothing');
     }
 
     postbackResponse = constructResponseMessage(sender_psid, response)

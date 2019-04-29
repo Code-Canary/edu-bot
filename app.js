@@ -9,7 +9,7 @@ require('dotenv').config();
  */
 const connect = require("./dao/connector");
 
-// Open DB Connection 
+// Open DB Connection
 connect();
 
 const Lesson = require('./dao/models/lesson');
