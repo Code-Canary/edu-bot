@@ -4,6 +4,48 @@ let mongoose = require('mongoose');
 let Lesson = require('../models/lesson').Lesson;
 let Question = require('../models/question').Question;
 
+let bottomLevelQuestions = [
+    new Question({
+        title: "How do you write a div?",
+        type: "free_text",
+        rendered_image_path: "",
+        branches: [{
+            answer: "<div></div>",
+            next_question: null,
+        }]
+    }),
+    new Question({
+        title: "Answwer yes or no",
+        type: "free_text",
+        rendered_image_path: "",
+        branches: [{
+            answer: "yes",
+            next_question: null,
+        },
+        {
+            answer: "no>",
+            next_question: null,
+        }]
+    }),
+    new Question({
+        title: "How can you write css colors?",
+        branches: [{
+            answer: "Hex Codes",
+            next_question: null,
+        },
+        {
+            answer: "With a goat",
+            next_question: null,
+        },
+        {
+            answer: "Im sleepy",
+            next_question: null,
+        }],
+        type: "multiple_choice",
+        rendered_image_path: ""
+    })
+];
+
 let questions = [
     new Question({
         title: "How do you write a div?",
@@ -11,26 +53,22 @@ let questions = [
         rendered_image_path: "",
         branches: [{
             answer: "<div></div>",
-            question: null,
+            next_question: bottomLevelQuestions[0]._id,
         }]
     }),
     new Question({
-        title: "How can you write css colors?",
+        title: "Answwer yes or no",
+        type: "free_text",
+        rendered_image_path: "",
         branches: [{
-            answer: "Hex Codes",
-            question: null,
+            answer: "yes",
+            next_question: bottomLevelQuestions[1]._id,
         },
         {
-            answer: "With a goat>",
-            question: null,
-        },
-        {
-            answer: "Im sleepy>",
-            question: null,
-        }],
-        type: "multiple_choice",
-        rendered_image_path: ""
-    })
+            answer: "no",
+            next_question: bottomLevelQuestions[2]._id,
+        }]
+    }),
 ];
 
 let lessons = new Lesson({
@@ -55,8 +93,8 @@ let lessons = new Lesson({
     `
 })
 
-console.log('Dropping existing collections');
 
+console.log('Dropping existing collections');
 mongoose.connection.collections['lessons'].drop(function (err) {
     console.log('lessons collection has been dropped.');
     lessons.save((err) => {
@@ -84,7 +122,6 @@ mongoose.connection.collections['questions'].drop(function (err) {
         });
     });
 });
-
 mongoose.connection.collections['users'].drop(function (err) {
     console.log('users collection has been dropped.');
 });

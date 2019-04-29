@@ -8,12 +8,14 @@ const Lesson = require('../dao/models/lesson').Lesson
 
 async function handleMessage(sender_psid, received_message) {
 
-    var user = await User.findOne({ "sender_psid": sender_psid });
+    var user = await User.findOne({ sender_psid: sender_psid }).exec();
+
     if (!user) {
+        console.log("Creating new user...");
         user = new User({
             sender_psid: sender_psid,
         });
-        user.save();
+        user = await user.save();
     }
 
     let response;
@@ -45,22 +47,27 @@ async function handleMessage(sender_psid, received_message) {
                 postbackResponse = constructResponseMessage(sender_psid, response)
                 callSendAPI(postbackResponse);
                 return;
-            }
-
-            // Response to: Hi! "So you want to create a homepage?"
-            if (lesson.progress === 1) {
-                if (received_message.text === 'No') {
-                    response = constructTextResponse('Why? :-(');
-                    // user.save();
-                } else {
-                    response = constructTextResponse('What do you want your homepage to be about?');
-                    // user.save();
-                }
-                user.save();
+            } else {
+                response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
                 postbackResponse = constructResponseMessage(sender_psid, response)
                 callSendAPI(postbackResponse);
                 return;
             }
+        } else if (user.lessons[0].progress == 1) {
+            // Response to: Hi! "So you want to create a homepage?"
+            // if (lesson.progress === 1) {
+            if (received_message.text === 'No') {
+                response = constructTextResponse('Why? :-(');
+                // user.save();
+            } else {
+                response = constructTextResponse('What do you want your homepage to be about?');
+                // user.save();
+            }
+            user.save();
+            postbackResponse = constructResponseMessage(sender_psid, response)
+            callSendAPI(postbackResponse);
+            return;
+            // }
         } else {
             response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
         }
