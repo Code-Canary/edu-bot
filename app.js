@@ -7,9 +7,9 @@ require('dotenv').config();
  * Initialize DB connection
  * Initialize models
  */
-const connect = require('./dao/connector');
+const connect = require("./dao/connector");
 
-// Open DB Connection
+// Open DB Connection 
 connect();
 
 const Lesson = require('./dao/models/lesson');
@@ -17,6 +17,8 @@ const User = require('./dao/models/user');
 const Question = require('./dao/models/question').Question;
 const APIController = require('./controllers/APIController');
 const constructTemplateResponse = require('./service/messengerService').constructTemplateResponse;
+const getRawContents = require('./render/html-formatter').getRawContents;
+const getFormattedContent = require('./render/html-formatter').getFormattedContent;
 
 // Call seeder for sample lessons.
 require('./dao/seeder/lessonSeeder');
