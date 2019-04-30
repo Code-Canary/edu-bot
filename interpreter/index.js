@@ -17,7 +17,7 @@ const runLesson = async (sender_psid, received_message) => {
 
     var response = {};
 
-    if (user.lessons.length === 0 && !userInput === 'Start') {
+    if (user.lessons.length === 0 && userInput !== 'Start') {
         return response;
     }
 
