@@ -98,7 +98,9 @@ const htmlAsImage = html =>
 
 module.exports = {
     htmlAsImage,
-    codeAsImage
+    codeAsImage,
+    getPlaceholders,
+    fillTheBlanks
 };
 
 // Example usage:  
