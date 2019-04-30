@@ -51,16 +51,18 @@ async function handlePostback(sender_psid, received_postback) {
 
         if (!user) {
             console.log("Creating new user...");
-            user = new User({
-                sender_psid: sender_psid,
-            });
 
             const lessonOne = await Lesson.findOne();
 
-            user.lessons.push({
-                lesson_info: lessonOne,
-                status: "in_progress",
-                progress: 'q001',
+            user = new User({
+                sender_psid: sender_psid,
+                lessons: [
+                    {
+                        lesson_info: lessonOne,
+                        status: "in_progress",
+                        progress: 'q000',
+                    }
+                ]
             });
 
             await user.save();
