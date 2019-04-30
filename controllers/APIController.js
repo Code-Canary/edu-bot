@@ -65,13 +65,18 @@ function handleWebhookEvent(req, res) {
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
+                if (webhook_event.message.quick_reply) {
+                    console.log("Webhook message", { text: webhook_event.message.quick_reply.payload });
+                    messengerService.handleMessage(sender_psid, webhook_event.message);
+                    return;
+                }
+
                 console.log("Webhook message", webhook_event.message);
                 messengerService.handleMessage(sender_psid, webhook_event.message);
-            } if (webhook_event.message.quick_reply) {
-                console.log("Webhook message", { text: webhook_event.message.quick_reply.payload });
-                messengerService.handleMessage(sender_psid, webhook_event.message);
-            } else {
+                return;
+            }
 
+            if (webhook_event.postback) {
                 console.log("webhook payload", webhook_event.postback);
                 messengerService.handlePostback(sender_psid, webhook_event.postback);
             }
