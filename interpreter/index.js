@@ -86,7 +86,7 @@ const runLesson = async (sender_psid, received_message) => {
             case 'code':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
-                var {url} = await codeAsImage(question.code);
+                var { url } = await codeAsImage(question.code);
                 response = constructImageResponse(question.title, url);
                 await user.save();
                 return { response, type: question.type };
@@ -123,7 +123,7 @@ const runLesson = async (sender_psid, received_message) => {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
                 // let filterQuestion = question;
                 // filterQuestion.title = fill(question.title, currentLesson.answers);
-                response = list(question.title, question.branches);
+                response = quickReply(question.title, question.branches);
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;

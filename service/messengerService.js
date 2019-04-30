@@ -5,6 +5,8 @@ const flickrOptions = {
     secret: "ef0e017684ae9935"
 };
 
+const { quickReply } = require('../service/messageTemplates');
+
 var User = require("../dao/models/user");
 var { Lesson } = require("../dao/models/lesson");
 var { Question } = require("../dao/models/question");
@@ -74,7 +76,7 @@ async function handlePostback(sender_psid, received_postback) {
         }
 
         const question = await Question.findOne({ id: 'q000' });
-        response = constructTextResponse(question.title);
+        response = quickReply(question.title, question.branches);
         let postbackResponse = constructResponseMessage(sender_psid, response)
 
         let startingMessage = constructTextResponse("Welcome to Code Canary! You've come to the right place to learn code in a very fun way. Let's get Started!");
@@ -88,6 +90,7 @@ async function handlePostback(sender_psid, received_postback) {
 
     } else {
         // Set the response based on the postback payload
+        console.log(payload);
         response = await runLesson(sender_psid, received_message);
     }
 
