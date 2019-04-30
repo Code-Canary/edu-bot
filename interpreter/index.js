@@ -115,8 +115,8 @@ const runLesson = async (sender_psid, received_message) => {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
                 // let filterQuestion = question;
                 // filterQuestion.title = fill(question.title, currentLesson.answers);
-                response = quickReply(question.title, question.branches);
                 question = await Question.findOne({ id: question.branches[0].next_question });
+                response = quickReply(question.title, question.branches);
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 await user.save();
