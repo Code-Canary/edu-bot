@@ -1,4 +1,10 @@
 const request = require("request");
+const Flickr = require('flickrapi');
+const flickrOptions = {
+    api_key: "a260c2cc20d55d630365fbc4c8b1c9b6",
+    secret: "ef0e017684ae9935"
+};
+
 var User = require("../dao/models/user");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
@@ -113,9 +119,28 @@ function constructTemplateResponse(template) {
     })
 }
 
+function seachMatchingPicture(tag) {
+    Flickr.tokenOnly(flickrOptions, function (error, flickr) {
+        flickr.photos.search({
+            tags: tag,
+            safe_search: 1,
+            content_type: 1,
+            per_page: 4,
+            media: 'photos',
+            extras: 'url_o'
+        }, function (err, result) {
+            if (err) { throw new Error(err); }
+            else {
+                // returns array, use url_o to get the image link.
+                return result.photos.photo
+            }
+        })
+    });
+}
 
 module.exports = {
     constructTemplateResponse,
     handleMessage: handleMessage,
-    handlePostback: handlePostback
+    handlePostback: handlePostback,
+    seachMatchingPicture
 }
