@@ -90,8 +90,8 @@ async function handlePostback(sender_psid, received_postback) {
 
     } else {
         // Set the response based on the postback payload
-        console.log(payload);
-        response = await runLesson(sender_psid, received_message);
+        console.log("PAYLOAD:", payload);
+        response = await runLesson(sender_psid, payload);
     }
 
     let postbackResponse = constructResponseMessage(sender_psid, response)
