@@ -51,16 +51,18 @@ async function handlePostback(sender_psid, received_postback) {
 
         if (!user) {
             console.log("Creating new user...");
-            user = new User({
-                sender_psid: sender_psid,
-            });
 
             const lessonOne = await Lesson.findOne();
 
-            user.lessons.push({
-                lesson_info: lessonOne,
-                status: "in_progress",
-                progress: 'q000',
+            user = new User({
+                sender_psid: sender_psid,
+                lessons: [
+                    {
+                        lesson_info: lessonOne,
+                        status: "in_progress",
+                        progress: 'q000',
+                    }
+                ]
             });
 
             await user.save();
@@ -75,7 +77,7 @@ async function handlePostback(sender_psid, received_postback) {
 
         setTimeout(function () {
             callSendAPI(postbackResponse);
-        }, 2000);
+        }, 3000);
 
     } else {
         // Set the response based on the postback payload
