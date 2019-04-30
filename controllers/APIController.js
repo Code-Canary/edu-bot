@@ -5,7 +5,7 @@ function renderHtml(req, res, userSchema) {
     const userId = req.query['userId'];
     console.log('Rendering for user: ')
     return userSchema.findOne({ 'userId': userId })
-        .then(function(user) {
+        .then(function (user) {
             const renderedContent = renderer.render(user.answers);
             console.log('Rendered content: ', renderedContent);
 
@@ -49,7 +49,7 @@ function handleWebhookEvent(req, res) {
     // Parse the request body from the POST
     let body = req.body;
 
-    console.log(body);
+    console.log("Webhook:", body);
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
         body.entry.forEach(function (entry) {
@@ -67,6 +67,7 @@ function handleWebhookEvent(req, res) {
             if (webhook_event.message) {
                 messengerService.handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
+                console.log("webhook payload", webhook_event.postback);
                 messengerService.handlePostback(sender_psid, webhook_event.postback);
             }
 
