@@ -6,25 +6,16 @@ const flickrOptions = {
 };
 
 var User = require("../dao/models/user");
+var { Lesson } = require("../dao/models/lesson");
+var { Question } = require("../dao/models/question");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const MessageTemplates = require('./messageTemplates');
 const getRawContents = require('../render/html-formatter').getRawContents;
-const Lesson = require('../dao/models/lesson').Lesson
 
 const { runLesson } = require('../interpreter/index');
 
 async function handleMessage(sender_psid, received_message) {
-
-    var user = await User.findOne({ sender_psid: sender_psid }).exec();
-
-    if (!user) {
-        console.log("Creating new user...");
-        user = new User({
-            sender_psid: sender_psid,
-        });
-        user = await user.save();
-    }
 
     let response;
     var postbackResponse = {};
@@ -49,18 +40,52 @@ async function handleMessage(sender_psid, received_message) {
     callSendAPI(postbackResponse);
 }
 
-function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {
     var response;
     // Get the payload for the postback
     let payload = received_postback.payload;
 
     console.log("Postback response:", received_postback);
+    if (received_postback.payload === "started") {
+        var user = await User.findOne({ sender_psid: sender_psid }).exec();
 
-    // Set the response based on the postback payload
-    if (payload === "yes") {
-        response = constructTextResponse("Thanks!");
-    } else if (payload === "no") {
-        response = constructTextResponse("Oops, try sending another image.");
+        if (!user) {
+            console.log("Creating new user...");
+            user = new User({
+                sender_psid: sender_psid,
+            });
+            user = await user.save();
+        }
+
+        const lessonOne = await Lesson.findOne();
+
+        await user.lessons.push({
+            lesson_info: lessonOne,
+            status: "in_progress",
+            progress: 'q000',
+        });
+
+        const question = await Question.findOne({ id: 'q000' });
+        response = constructTextResponse(question.title);
+        let postbackResponse = constructResponseMessage(sender_psid, response)
+
+        // Send the message to acknowledge the postback
+        // callSendAPI(postbackResponse);
+
+        let followupResponse = constructTextResponse("Do you want to build homepage? You've come to the right place! Let's get Started!");
+        callSendAPI(constructResponseMessage(sender_psid, followupResponse))
+
+        setTimeout(function () {
+            callSendAPI(postbackResponse);
+        }, 1000);
+
+    } else {
+        // Set the response based on the postback payload
+        if (payload === "yes") {
+            response = constructTextResponse("Thanks!");
+        } else if (payload === "no") {
+            response = constructTextResponse("Oops, try sending another image.");
+        }
     }
 
     let postbackResponse = constructResponseMessage(sender_psid, response)
