@@ -21,6 +21,7 @@ const runLesson = async (sender_psid, received_message) => {
         return response;
     }
 
+    // STARTING
     if (user.lessons.length === 0) {
         const lessonOne = await Lesson.findOne();
 
@@ -29,28 +30,10 @@ const runLesson = async (sender_psid, received_message) => {
             status: "in_progress",
             progress: 'q000',
         });
-
-
-        // We only have 1 lesson now, so the currentLesson is always the first one
-        // const currentLesson = user.lessons[0];
-
-        // const question = await Question.findOne({ id: currentLesson.progress });
-
-        // currentLesson.progress = question.branches[0].next_question;
-
-        // response = constructTextResponse(question.title);
-
-        // await user.save();
-        // return response;
     }
 
-    // STARTING
-    // if (userInput === 'Start') {
-
-    // }
 
     // NORMAL CASE
-
     // set new progress
     let newProgress;
     const currentLesson = user.lessons[0];
@@ -64,12 +47,7 @@ const runLesson = async (sender_psid, received_message) => {
     if (question) {
         response = constructTextResponse(question.title);
 
-        // const previousAnswer = currentLesson.answers.find(answer => answer.question === currentProgress);
-        // console.log({ previousAnswer });
 
-        /**
-         * NEXT QUESTION
-         */
         // Question that doesnt require answer
         if (question.branches.length === 1 && !question.branches[0].answer) {
             // TODO: Save user selection here
@@ -80,6 +58,7 @@ const runLesson = async (sender_psid, received_message) => {
             return response;
         }
 
+        // Question that has only 1 answer
         if (question.branches.length === 1 && question.branches[0].answer !== null) {
             // TODO: NLP check to match percentage of the user input to the answer.
             // for now, it'll be hardcoded.
