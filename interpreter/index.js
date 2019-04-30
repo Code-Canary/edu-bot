@@ -92,14 +92,11 @@ const runLesson = async (sender_psid, received_message) => {
         return response;
     }
 
-
     // NORMAL CASE
     let newProgress;
     const currentLesson = user.lessons[0];
     const currentProgress = currentLesson.progress;
     const question = await Question.findOne({ id: currentProgress });
-
-    console.log({ currentProgress, question });
 
     if (question) {
         // Question that doesnt require answer
