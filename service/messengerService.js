@@ -54,27 +54,28 @@ async function handlePostback(sender_psid, received_postback) {
             user = new User({
                 sender_psid: sender_psid,
             });
-            user = await user.save();
+
+            const lessonOne = await Lesson.findOne();
+
+            user.lessons.push({
+                lesson_info: lessonOne,
+                status: "in_progress",
+                progress: 'q000',
+            });
+
+            await user.save();
         }
-
-        const lessonOne = await Lesson.findOne();
-
-        await user.lessons.push({
-            lesson_info: lessonOne,
-            status: "in_progress",
-            progress: 'q000',
-        });
 
         const question = await Question.findOne({ id: 'q000' });
         response = constructTextResponse(question.title);
         let postbackResponse = constructResponseMessage(sender_psid, response)
 
-        let followupResponse = constructTextResponse("Welcome to Code Canary! You've come to the right place to learn code in a very fun way. Let's get Started!");
-        callSendAPI(constructResponseMessage(sender_psid, followupResponse))
+        let startingMessage = constructTextResponse("Welcome to Code Canary! You've come to the right place to learn code in a very fun way. Let's get Started!");
+        callSendAPI(constructResponseMessage(sender_psid, startingMessage))
 
         setTimeout(function () {
             callSendAPI(postbackResponse);
-        }, 1000);
+        }, 2000);
 
     } else {
         // Set the response based on the postback payload
