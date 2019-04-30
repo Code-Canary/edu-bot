@@ -88,11 +88,7 @@ async function handlePostback(sender_psid, received_postback) {
 
     } else {
         // Set the response based on the postback payload
-        if (payload === "yes") {
-            response = constructTextResponse("Thanks!");
-        } else if (payload === "no") {
-            response = constructTextResponse("Oops, try sending another image.");
-        }
+        response = await runLesson(sender_psid, received_message);
     }
 
     let postbackResponse = constructResponseMessage(sender_psid, response)

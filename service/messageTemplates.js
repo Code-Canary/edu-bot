@@ -20,6 +20,35 @@ const renderMultipleElements = function (data, templateType) {
     });
 }
 
+const list = function (title, branches) {
+    let listItems = [];
+
+    branches.forEach(branch => {
+        listItems.push({
+            "title": title,
+            "subtitle": branch.answer,
+            "image_url": branch.answer,
+            "default_action": {
+                "type": "web_url",
+                "url": "www.google.com",
+                "messenger_extensions": 'FALSE',
+                "webview_height_ratio": "COMPACT"
+            }
+        });
+    })
+
+    return {
+        'attachment': {
+            'type': 'template',
+            "payload": {
+                "template_type": "list",
+                "top_element_style": "COMPACT",
+                "elements": listItems
+            }
+        }
+    }
+}
+
 const generic = function ({ title, subtitle, buttons }) {
     return {
         'attachment': {
@@ -135,5 +164,6 @@ module.exports = {
     button,
     multi_choice,
     media,
-    generic_web
+    generic_web,
+    list: list
 };
