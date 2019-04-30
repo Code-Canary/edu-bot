@@ -6,7 +6,7 @@ const questions = [
         title: "Hi! Do you want to build a homepage? 😀",
         type: "multi_choice",
         branches: [{
-            answer: "yeah! ",
+            answer: "yeah!",
             next_question: "q001",
         },
         {
@@ -17,7 +17,7 @@ const questions = [
             answer: "no",
             next_question: "q00",
         },
-    ]
+        ]
     }),
     new Question({ // 00
         id: "q00",
