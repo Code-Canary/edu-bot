@@ -79,13 +79,13 @@ const runLesson = async (sender_psid, received_message) => {
         switch (question.type) {
             //TODO: imagePath may need domain prepended...
             case 'code':
-                newProgress = question.branches[0].next_question;
+                newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructImageResponse(question.title, question.url);
                 await user.save();
                 return { response, type: question.type };
             case 'preview':
-                newProgress = question.branches[0].next_question;
+                newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();

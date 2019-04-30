@@ -67,7 +67,7 @@ async function handlePostback(sender_psid, received_postback) {
                     {
                         lesson_info: lessonOne,
                         status: "in_progress",
-                        progress: 'q000',
+                        progress: 'q001',
                     }
                 ]
             });
