@@ -113,14 +113,16 @@ const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
                     },
                     "buttons": renderMultipleElements(buttons, 'button')
                 }
+            ]
+        }
     }
-    }
+}
 
-    module.exports = {
-        generic,
-        quickReply,
-        button,
-        multi_choice,
-        media,
-        generic_web
-    };
+module.exports = {
+    generic,
+    quickReply,
+    button,
+    multi_choice,
+    media,
+    generic_web
+};

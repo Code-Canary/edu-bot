@@ -16,7 +16,7 @@ const questions = [
     }),
     new Question({ // 00
         id: "q00",
-        title: "Why..Think about again :(",
+        title: "Why? Try it :)",
         type: "free_text",
         branches: [{
             answer: "yes",
@@ -123,7 +123,7 @@ const questions = [
     }),
     new Question({ // 10
         id: "q010",
-        title: "Hmm..think about again..",
+        title: "Hmm..think about it again..",
         type: "multi_choice",
         branches: [{
             answer: "<div style=\"background‐color:red\">",
