@@ -53,7 +53,7 @@ async function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload;
     console.log("Postback payload:", payload);
 
-    if (received_postback.payload === "started") {
+    if (payload === "started") {
         var user = await User.findOne({ sender_psid: sender_psid }).exec();
 
         if (!user) {
@@ -88,16 +88,10 @@ async function handlePostback(sender_psid, received_postback) {
         }, 2000);
 
         return;
-
-    } else {
-        // Set the response based on the postback payload
-        console.log("PAYLOAD:", payload);
-        response = await runLesson(sender_psid, payload);
     }
 
+    response = await runLesson(sender_psid, { text: payload });
     let postbackResponse = constructResponseMessage(sender_psid, response)
-
-    // Send the message to acknowledge the postback
     callSendAPI(postbackResponse);
 }
 
