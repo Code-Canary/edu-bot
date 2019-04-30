@@ -74,27 +74,24 @@ const multi_choice = function ({ title, subtitle, buttons, image_url, url }) {
             'webview_height_ratio': 'COMPACT',
           },
         },
-      ],
-      'buttons': [],
-    },
-  };
+    };
 };
 
 const media = function ({ media_type, attachment_id }) {
-  return {
-    'attachment': {
-      'type': 'template',
-      'payload': {
-        'template_type': 'media',
-        'elements': [
-          {
-            'media_type': media_type,
-            'attachment_id': attachment_id,
-          },
-        ],
-      },
-    },
-  };
+    return {
+        'attachment': {
+            'type': 'template',
+            'payload': {
+                'template_type': 'media',
+                'elements': [
+                    {
+                        'media_type': media_type,
+                        'attachment_id': attachment_id,
+                    },
+                ],
+            },
+        },
+    };
 };
 
 const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
@@ -113,9 +110,7 @@ const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
           },
           "buttons": renderMultipleElements(buttons, 'button')
         }
-      ]
     }
-  }
 }
 
 module.exports = {
