@@ -99,11 +99,12 @@ const runLesson = async (sender_psid, received_message) => {
                 await user.save();
                 return response;
             case 'informative':
-                newProgress = question.branches[0].next_question;
+                question = await Question.findOne({ id: question.branches[0].next_question });
+                newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
-                return response;
+                return runLesson(sender_psid, received_message);
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
@@ -155,6 +156,31 @@ function constructResponseMessage(sender_psid, response) {
         "message": response,
     };
 }
+
+function callSendAPI(userMessage) {
+    // Construct the message body
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v3.2/me/messages",
+        "qs": { "access_token": PAGE_ACCESS_TOKEN },
+        "method": "POST",
+        "headers": { "Content-Type": "application/json" },
+        "json": userMessage,
+    }, (err, res, body) => {
+        switch (res.statusCode) {
+            case 200:
+                console.log("Message sent to user successfully!");
+                break;
+            default:
+                console.error("Unable to send message:", userMessage);
+                console.error("Received Error:", err);
+                console.error("Response was:", body);
+                break;
+        }
+    });
+}
+
 
 module.exports = {
     runLesson,
