@@ -7,7 +7,8 @@ var questionSchema = new mongoose.Schema({
         answer: String,
         next_question: String
     }], // empty for informative
-    type: String, // free_text, multi_choice, informative -> ignore answer value
+    type: String, // free_text, multi_choice, informative -> ignore answer value, code
+    code: String,
     rendered_image_path: String,
 }, { timestamps: true });
 
