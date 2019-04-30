@@ -48,7 +48,7 @@ const quickReply = function (title, branches) {
         });
     })
     return {
-        'text': title,
+        'text': title || 'Select an option',
         'quick_replies': quickReplies
     };
 };

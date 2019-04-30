@@ -84,6 +84,9 @@ const runLesson = async (sender_psid, received_message) => {
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
                 question = await Question.findOne({ id: question.branches[0].next_question });
+                if (currentProgress === "q001") {
+                    question = await Question.findOne({ id: question.branches[0].next_question });
+                }
                 newProgress = question.branches[0].next_question;
 
                 currentLesson.progress = newProgress;
