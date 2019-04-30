@@ -17,16 +17,11 @@ const constructTextResponse = (message) => {
 const constructImageResponse = (title, image_url) => {
     return {
         "attachment": {
-            "type": "template",
+            "type": "image",
             "payload": {
-                "template_type": "generic",
-                "elements": [
-                    {
-                        title,
-                        image_url,
-                        //"subtitle":"<SUBTITLE_TEXT>", //TODO: maybe this is better than title?
-                    },
-                ]
+                image_url,
+                "is_reusable": true
+                //"subtitle":"<SUBTITLE_TEXT>", //TODO: maybe this is better than title?
             }
         }
     }
