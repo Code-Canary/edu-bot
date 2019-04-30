@@ -1,4 +1,4 @@
-const generic = function({ title, subtitle, buttons }) {
+const generic = function ({ title, subtitle, buttons }) {
   return {
     'attachment': {
       'type': 'template',
@@ -51,7 +51,7 @@ const button = function({ title, buttons }) {
   };
 };
 
-const list = function({ title, subtitle, buttons, image_url, url }) {
+const list = function ({ title, subtitle, buttons, image_url, url }) {
   return {
     'payload': {
       'template_type': 'list',
@@ -75,7 +75,7 @@ const list = function({ title, subtitle, buttons, image_url, url }) {
   };
 };
 
-const media = function({ media_type, attachment_id }) {
+const media = function ({ media_type, attachment_id }) {
   return {
     'attachment': {
       'type': 'template',
@@ -92,10 +92,32 @@ const media = function({ media_type, attachment_id }) {
   };
 };
 
+const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
+  return {
+    "payload": {
+      "template_type": "generic",
+      "elements": [
+        {
+          "title": title,
+          "image_url": image_url,
+          "subtitle": subtitle,
+          "default_action": {
+            "type": "web_url",
+            "url": url,
+            "webview_height_ratio": "tall",
+          },
+          "buttons": [buttons]
+        }
+      ]
+    }
+  }
+}
+
 module.exports = {
   generic,
   quickReply,
   button,
   list,
   media,
+  generic_web
 };

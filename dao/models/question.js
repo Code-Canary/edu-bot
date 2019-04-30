@@ -1,11 +1,14 @@
 let mongoose = require('mongoose');
 
 var questionSchema = new mongoose.Schema({
+    id: String,
     title: String,
-    answer: String, // empty for informative
-    possible_answers: [String], // used for the multi_choice options
+    branches: [{
+        answer: String,
+        next_question: String
+    }], // empty for informative
     type: String, // free_text, multi_choice, informative -> ignore answer value
-    rendered_image_path: String
+    rendered_image_path: String,
 }, { timestamps: true });
 
 var Question = mongoose.model('Question', questionSchema);
