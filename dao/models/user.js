@@ -6,7 +6,7 @@ var userSchema = new mongoose.Schema({
     lessons: [{
         lesson_info: Lesson.lessonSchema,
         status: String, // completed, in_progress
-        progress: Number, // count of questions answered for this lesson
+        progress: String, // last question id the user worked on.
         answers: [{
             placeholder: String,
             value: String,

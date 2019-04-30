@@ -1,5 +1,6 @@
 const User = require("../dao/models/user");
-const Lesson = require('../dao/models/lesson').Lesson
+const { Lesson } = require('../dao/models/lesson');
+const { Question } = require('../dao/models/question');
 
 const constructTextResponse = (message) => ({
       "text": message,
@@ -13,37 +14,83 @@ const runLesson = async (sender_psid, received_message) => {
 
   const user = await User.findOne({ sender_psid: sender_psid }).exec();
 
-  if (!user.lessons || user.lessons.length === 0) {
-
+  // STARTING
+  if (received_message.text === 'Start') {
     const lessonOne = await Lesson.findOne();
 
-    user.lessons.push({
+    await user.lessons.push({
         lesson_info: lessonOne,
         status: "in_progress",
-        progress: 0,
+        progress: 'q000',
     });
 
-    if (received_message.text === 'Start') {
-        user.lessons[0].progress = user.lessons[0].progress + 1;
-        user.save();
+    // We only have 1 lesson now, so the currentLesson is alwasy the first one
+    const currentLesson = user.lessons[0];
 
-        response = constructTextResponse('Hi! So you want to create a homepage?');
-    } else {
-        response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
-    }
-  } else if (user.lessons[0].progress == 1) {
-    // Response to: Hi! "So you want to create a homepage?"
-    if (received_message.text === 'No') {
-        response = constructTextResponse('Why? :-(');
-    } else {
-        response = constructTextResponse('What do you want your homepage to be about?');
-    }
+    const question = await Question.findOne({ id: currentLesson.progress });
 
-  } else {
-    response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
+    currentLesson.progress = question.branches[0].next_question;
+
+    response = constructTextResponse(question.title);
+
+    await user.save();
+    return response;
   }
 
-  user.save();
+  // NORMAL CASE
+
+  // set new progress
+  let newProgress;
+
+  const currentLesson = user.lessons[0];
+  const currentProgress = currentLesson.progress;
+  const question = await Question.findOne({ id: currentProgress });
+
+  console.log({ currentProgress, question });
+
+  if (question) {
+    response = constructTextResponse(question.title);
+
+
+    const previousAnswer = currentLesson.answers.find(answer => answer.question === currentProgress);
+    console.log({ previousAnswer });
+
+    /**
+     * NEXT QUESTION
+     */
+
+    // Only one answer
+    if (question.branches.length === 1 && question.branches[0].answer === null) {
+      // set answer
+      currentLesson.answers.push({ value: received_message.text, question: question._id });
+      // set progress
+      newProgress = question.branches[0].next_question;
+    }
+
+    // Two or more answers --> evaluate response
+    if (question.branches.length > 1) {
+      // set answer
+      const answerGiven = received_message.text;
+      currentLesson.answers.push({ value: answerGiven, question: question._id });
+      // set progress
+      question.branches.forEach(branch => {
+        if (branch.answer === answerGiven) {
+          // matching answer
+          currentLesson.answers.push({ value: answerGiven, question: branch.next_question });
+          newProgress = branch.nextQuestion;
+        }
+      })
+      if (newProgress === undefined) {
+        // free text
+        // TODO: Add free text handling here!
+        newProgress = question.branches[0].next_question;
+      }
+    }
+
+  }
+  user.lessons[0].progress = newProgress;
+
+  await user.save();
   return response;
 }
 
