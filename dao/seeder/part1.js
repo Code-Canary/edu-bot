@@ -3,12 +3,21 @@ let Question = require('../models/question').Question;
 const questions = [
     new Question({ // 0
         id: "q000",
-        title: "Hi! Do you want to build a homepage?",
-        type: "free_text",
+        title: "Hi! Do you want to build a homepage? 😀",
+        type: "multi_choice",
         branches: [{
-            answer: "",
+            answer: "yeah! ",
             next_question: "q001",
-        }]
+        },
+        {
+            answer: "sure!",
+            next_question: "q001",
+        },
+        {
+            answer: "no",
+            next_question: "q00",
+        },
+    ]
     }),
     new Question({ // 00
         id: "q00",
@@ -25,7 +34,7 @@ const questions = [
     }),
     new Question({ // 1
         id: "q001",
-        title: "What are you really passionate about? A hobby or a favorite animal? Give me a word please! 😊",
+        title: "Ok, let's start! 🚀 What are you really passionate about? 👊 A hobby or a favorite animal? Give me a word please! 😊",
         type: "free_text",
         branches: [{
             answer: "",
@@ -34,7 +43,7 @@ const questions = [
     }),
     new Question({ // 2
         id: "q002",
-        title: "Great! I love {{q001}}!",
+        title: "Great! I love {{q001}}! 😍",
         type: "informative",
         branches: [{
             answer: null,
@@ -43,7 +52,7 @@ const questions = [
     }),
     new Question({ // 3
         id: "q003",
-        title: "Look, this here is a homepage I would imagine to be a nice page about {{q001}}.",
+        title: "Look, this here is a homepage 🖥 I made about {{q001}}.",
         type: "preview",
         code: `
             <div style="background-color: beige;">
@@ -58,7 +67,7 @@ const questions = [
     }),
     new Question({ // 4
         id: "q004",
-        title: "Does it look good? Do you like it? 🤓",
+        title: "Does it look good? 💅 Do you like it? 🤓",
         type: "multi_choice",
         branches: [{
             answer: "yes",
@@ -71,7 +80,7 @@ const questions = [
     }),
     new Question({ // 5
         id: "q005",
-        title: "Well, everyone's taste is different. 😝 I live it 😇 and I want to tell you a bit more about it.",
+        title: "Well, everyone's taste is different. 😝 I like it 😇 and I want to tell you about it's inner workings! 😏",
         type: "informative",
         branches: [{
             answer: null,
@@ -80,7 +89,7 @@ const questions = [
     }),
     new Question({ // 6
         id: "q006",
-        title: "Nice! 😃 I want to tell you a bit more about it!",
+        title: "Nice! 😃 I want to tell you about it's inner workings! 😏",
         type: "informative",
         branches: [{
             answer: null,
@@ -89,7 +98,7 @@ const questions = [
     }),
     new Question({ // 7
         id: "q007",
-        title: "A homepage is made out of programming code (or just 'code' in short) which is written by programmers. You will also be a programmer soon! That's how the code looks like:",
+        title: "A homepage is made out of programming code (or just 'code' in short) which is written by programmers 👩🏽‍💻👨‍💻. You will also be a programmer soon! 👍 That's how the code looks like:",
         type: "code",
         code: `
             <div style="background-color: beige;">
@@ -104,7 +113,7 @@ const questions = [
     }),
     new Question({
         id: "q008",
-        title: "That might look a bit scary, but it's very easy, you will see!",
+        title: "That might look a bit scary 😱, but it's very easy, you will see! 😊",
         type: "informative",
         branches: [{
             answer: null,
@@ -130,7 +139,7 @@ const questions = [
 
     new Question({
         id: "q009",
-        title: "Let us change the code a bit and see how it affects the page",
+        title: "Let us change the code a bit and see how it affects the page 😉",
         type: "informative",
         branches: [{
             answer: "",
@@ -148,8 +157,8 @@ const questions = [
     }),
     new Question({
         id: "q011",
-        title: "Let us change the background color! How should we change the first line? How should it look like?",
-        type: "quickReply",
+        title: "Let us change the background color 🖍! How should we change the first line? 1️⃣ How should it look like? 💁🏼‍",
+        type: "multi_choice",
         branches: [{
             answer: "<div style=\"background‐color: {{q010}}\">",
             next_question: "q013",
@@ -206,7 +215,7 @@ const questions = [
     }),
     new Question({
         id: "q015",
-        title: "You see, we don't have to understand every thing here, but can already make changes! That's so cool! 😻",
+        title: "You see, we don't have to understand every thing here 🤫, but can already make changes! 🛠 That's so cool! 😻",
         type: "informative",
         branches: [{
             answer: null,
@@ -215,7 +224,7 @@ const questions = [
     }),
     new Question({
         id: "q016",
-        title: "HTML is the language in which websites are written and 'style' is a so-called Attribute. It styles HTML elements, like a 'div'.",
+        title: "'HTML' is the language in which websites are written and 'style' is a so-called 'Attribute'. It styles 'HTML' elements, like a 'div'.",
         type: "informative",
         branches: [{
             answer: null,
@@ -224,7 +233,7 @@ const questions = [
     }),
     new Question({ // 13
         id: "q017",
-        title: " People like to style themselves, so do HTML elements! We just changed the background-color style of a 'div' element. 👩🏻‍🎨",
+        title: "People like to style themselves 💄💅😍, so do HTML elements 😻! We just changed the background-color 🖍 style of a 'div' element. 👩🏻‍🎨",
         type: "informative",
         branches: [{
             answer: null,
@@ -233,7 +242,7 @@ const questions = [
     }),
     new Question({ // 13
         id: "q018",
-        title: "Now it's your turn! You'll create your own website.",
+        title: "Now it's your turn! ✅ You'll create your own website. 😜",
         type: "informative",
         branches: [{
             answer: null,
@@ -242,7 +251,7 @@ const questions = [
     }),
     new Question({ // 14
         id: "q019",
-        title: "What should your site be about?",
+        title: "What should your site be about? 😇",
         type: "free_text",
         branches: [{
             answer: "",
@@ -251,7 +260,7 @@ const questions = [
     }),
     new Question({ // 15
         id: "q020",
-        title: "Great idea! {{q019}}! I always want more! So cool!",
+        title: "Great idea! {{q019}}! 💡So cool! 😎",
         type: "informative",
         branches: [{
             answer: null,
@@ -260,7 +269,7 @@ const questions = [
     }),
     new Question({
         id: "q021",
-        title: "So how do we start? What is the name of the component of the outer layer? Do you remember?",
+        title: "So how do we start? 🏃‍ What is the name of the component of the outer layer? Do you remember? 🤔",
         type: "multi_choice",
         branches: [{
             answer: "div",
@@ -269,7 +278,7 @@ const questions = [
     }),
     new Question({ // 17
         id: "q022",
-        title: "Yes! The code is as below.",
+        title: "Excellent! 💪 The code is as below:",
         type: "code",
         code: `<div></div>`,
         branches: [{
@@ -279,7 +288,7 @@ const questions = [
     }),
     new Question({ // 18
         id: "q023",
-        title: "Here is how it looks.",
+        title: "Here is how it looks. 👀",
         type: "preview",
         code: `<div></div>`,
         branches: [{
@@ -289,7 +298,7 @@ const questions = [
     }),
     new Question({ // 19
         id: "q024",
-        title: "Isn't it beautiful? Empty nothingness! What do you think?",
+        title: "Isn't it beautiful? 🧚‍Empty nothingness! 💁🏼‍What do you think? 🤔",
         type: "informative",
         branches: [{
             answer: null,
@@ -298,16 +307,16 @@ const questions = [
     }),
     new Question({
         id: "q025",
-        title: "Well, let's add some color, which one do you want?",
+        title: "Well, let's add some color 🖍, which color do you want?",
         type: "free_text",
         branches: [{
             answer: "",
             next_question: "q026",
         }]
     }),
-    new Question({ // 17
+    new Question({
         id: "q026",
-        title: "Yes! The code is as below.",
+        title: "You're the boss! 👷‍ The code is as below.",
         type: "code",
         code: `<div style="background-color: {{q025}}" >
         </div>`,
@@ -316,11 +325,10 @@ const questions = [
             next_question: "q027",
         }]
     }),
-    new Question({ // 21
+    new Question({
         id: "q027",
-        title: "Still nothing to see..Is it just me being color-blind or is there something?",
-        type: "code",
-        code: `<div style="background‐color:{{q020}}"></div>`,
+        title: "Still nothing to see.. 👁 Is it just me being color-blind or is there something... 🤔",
+        type: "informative",
         branches: [{
             answer: null,
             next_question: "q100",
