@@ -1,6 +1,9 @@
 let mongoose = require('mongoose');
 
-const questions = require('./part1');
+const questions1 = require('./part1');
+const questions2 = require('./part2');
+
+const questions = [...questions1, ...questions2];
 
 // Require models to seed
 let Lesson = require('../models/lesson').Lesson;
