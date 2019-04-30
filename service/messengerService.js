@@ -1,10 +1,18 @@
 const request = require("request");
+const Flickr = require('flickrapi');
+const flickrOptions = {
+    api_key: "a260c2cc20d55d630365fbc4c8b1c9b6",
+    secret: "ef0e017684ae9935"
+};
+
 var User = require("../dao/models/user");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const MessageTemplates = require('./messageTemplates');
 const getRawContents = require('../render/html-formatter').getRawContents;
 const Lesson = require('../dao/models/lesson').Lesson
+
+const { runLesson } = require('../interpreter/index');
 
 async function handleMessage(sender_psid, received_message) {
 
@@ -24,59 +32,15 @@ async function handleMessage(sender_psid, received_message) {
     getRawContents(sender_psid, null);
 
     if (received_message.text) {
-        // Create the payload for a basic text message, which
-        // will be added to the body of our request to the Send API
-
-        if (!user.lessons || user.lessons.length === 0) {
-
-            const lessonOne = await Lesson.findOne();
-
-            user.lessons.push({
-                lesson_info: lessonOne,
-                status: "in_progress",
-                progress: 0,
-            });
-
-            if (received_message.text === 'Start') {
-                user.lessons[0].progress = user.lessons[0].progress + 1;
-
-                response = constructTextResponse('Hi! So you want to create a homepage?');
-
-                user.save();
-
-                postbackResponse = constructResponseMessage(sender_psid, response)
-                callSendAPI(postbackResponse);
-                return;
-            } else {
-                response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
-                postbackResponse = constructResponseMessage(sender_psid, response)
-                callSendAPI(postbackResponse);
-                return;
-            }
-        } else if (user.lessons[0].progress == 1) {
-            // Response to: Hi! "So you want to create a homepage?"
-            // if (lesson.progress === 1) {
-            if (received_message.text === 'No') {
-                response = constructTextResponse('Why? :-(');
-                // user.save();
-            } else {
-                response = constructTextResponse('What do you want your homepage to be about?');
-                // user.save();
-            }
-            user.save();
-            postbackResponse = constructResponseMessage(sender_psid, response)
-            callSendAPI(postbackResponse);
-            return;
-            // }
-        } else {
-            response = constructTextResponse(`You sent the message: "${received_message.text}". Now send me an attachment!`);
-        }
-
-    } else if (received_message.attachments) {
-        // Get the URL of the message attachment
-        // let attachment_url = received_message.attachments[0].payload.url;
-        response = constructTemplateResponse('Nothing');
+        // Create the payload for a basic text message, which will be added to the body of our request to the Send API
+        response = await runLesson(sender_psid, received_message);
     }
+
+    // else if (received_message.attachments) {
+    //     // Get the URL of the message attachment
+    //     // let attachment_url = received_message.attachments[0].payload.url;
+    //     response = constructTemplateResponse('Nothing');
+    // }
 
     postbackResponse = constructResponseMessage(sender_psid, response)
     // Send the message to acknowledge the postback
@@ -155,9 +119,28 @@ function constructTemplateResponse(template) {
     })
 }
 
+function seachMatchingPicture(tag) {
+    Flickr.tokenOnly(flickrOptions, function (error, flickr) {
+        flickr.photos.search({
+            tags: tag,
+            safe_search: 1,
+            content_type: 1,
+            per_page: 4,
+            media: 'photos',
+            extras: 'url_o'
+        }, function (err, result) {
+            if (err) { throw new Error(err); }
+            else {
+                // returns array, use url_o to get the image link.
+                return result.photos.photo
+            }
+        })
+    });
+}
 
 module.exports = {
     constructTemplateResponse,
     handleMessage: handleMessage,
-    handlePostback: handlePostback
+    handlePostback: handlePostback,
+    seachMatchingPicture
 }

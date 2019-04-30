@@ -1,0 +1,13 @@
+diff --git a/node_modules/src2img/index.js b/node_modules/src2img/index.js
+index cfb9f70..6055269 100644
+--- a/node_modules/src2img/index.js
++++ b/node_modules/src2img/index.js
+@@ -70,7 +70,7 @@ const renderer = opts => {
+      }` : ''}`.replace(/^ {5}/m, '')
+ 
+   return (src, lang) => `<html><head><style>${style}</style></head><body><pre class="language-${lang}"><code class="language-${lang}">${
+-    prism.highlight(src, prism.languages[lang], lang)
++    prism.highlight(src, prism.languages[lang], lang).replace(new RegExp("█", 'g') ,'<span style="opacity: 0.4;">&block;</span>')
+   }</code></pre></body></html>`
+ }
+ 

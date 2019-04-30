@@ -50,10 +50,7 @@ let bottomLevelQuestions = [
 
 let lessons = new Lesson({
     name: "Initial Lesson",
-    questions: [
-        questions[0]._id,
-        questions[1]._id
-    ],
+    questions: questions.map(question => question._id),
     lesson_template: `
     <!DOCTYPE html>
         <html lang="en">

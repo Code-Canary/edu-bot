@@ -1,0 +1,116 @@
+const fs = require("fs");
+const path = require("path");
+
+const src2img = require("src2img");
+const puppeteer = require("puppeteer");
+
+let mustache_regex = /{{\s*([^}]+)\s*}}/g;
+
+let placeholderCharacter = "█";
+
+const out = "./generated";
+
+const getPlaceholders = template => template.match(mustache_regex);
+
+const fillTheBlanks = (template, placeholders) =>
+  Object.keys(placeholders).reduce((template, key) => {
+    const value = placeholders[key];
+    return template.replace(key, value);
+  }, template);
+
+// https://stackoverflow.com/a/7616484/1066356
+const hashCode = str => {
+  var hash = 0,
+    i,
+    chr;
+  if (str.length === 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
+const saveImage = code => image => {
+  const filename = `${hashCode(code)}.png`;
+  const filePath = path.join(out, filename);
+  return fs.writeFileSync(filePath, image);
+};
+
+const codeAsImage = code => {
+  const placeholders = getPlaceholders(code).reduce((placeholders, key) => {
+    placeholders[key.trim()] = key
+      .split("")
+      .map(_ => placeholderCharacter)
+      .join("");
+    return placeholders;
+  }, {});
+  const imageInput = fillTheBlanks(code, placeholders);
+
+  return src2img({
+    fontSize: 20, // Font size and unit control the size and quality of the image
+    fontSizeUnit: "pt",
+    padding: 3,
+    paddingUnit: "vw", // Using 'px' does not scale with font size
+    type: "png", // png or jpeg
+    src: [
+      [
+        imageInput,
+        "html" // See https://www.npmjs.com/package/filename2prism for getting alias from filename
+      ]
+    ]
+  })
+    .then(images => {
+      Promise.all(
+        images.map(saveImage)
+      );
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+const htmlAsImage = html =>
+  puppeteer.launch().then(browser =>
+    browser
+      .newPage()
+      .then(page =>
+        page
+          .setContent(html, { waitUntil: "networkidle0" })
+        //   .then(() => page.evaluate(() => {
+        //     const element = document.body
+        //     return [element.offsetWidth, element.offsetHeight]
+        //   }))
+        //   .then(([width, height]) => page.setViewport({ width, height }))
+          .then(() => page.setViewport({ width: 780, height: 410 }))
+          .then(() =>
+            page.screenshot({
+              type: "png",
+              omitBackground: true,
+              fullPage: false
+            })
+          )
+          .then(saveImage(html))
+      )
+      .then(() => browser.close())
+  );
+
+module.exports = {
+    htmlAsImage,
+    codeAsImage
+};
+
+// Example usage:  
+// codeAsImage(`
+// <div>
+//     {{ child-1 }}
+// </div>
+// `);
+
+// htmlAsImage(`
+// <div>
+//     <h1>Hello world!</h1>
+//     <img src="https://github.com/cem2ran.png" />
+// </div>
+// `);
