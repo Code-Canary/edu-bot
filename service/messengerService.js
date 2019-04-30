@@ -29,7 +29,7 @@ async function handleMessage(sender_psid, received_message) {
         response = await runLesson(sender_psid, received_message);
     }
 
-    if (response.type === 'informative') {
+    if (response.type === 'informative' || response.type === 'preview' || response.type === 'code') {
         setTimeout(() => {
             handleMessage(sender_psid, received_message);
         }, 1000);

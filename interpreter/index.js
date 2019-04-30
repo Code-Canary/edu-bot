@@ -82,16 +82,16 @@ const runLesson = async (sender_psid, received_message) => {
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
-                response = constructImageResponse(question.title, question.url);
+                response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
-                return { response, type: 'informative' };
+                return { response, type: question.type };
             case 'preview':
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
-                return { response, type: 'informative' };
+                return { response, type: question.type };
             case 'informative':
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
