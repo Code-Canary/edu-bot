@@ -109,7 +109,7 @@ function constructTextResponse(message) {
 
 function constructTemplateResponse(template) {
     return MessageTemplates[template]({
-        title: '',
+        title: ['Hey there', 'wasup', 'yoyo'],
         subtitle: '',
         buttons: '',
         image_url: '',
@@ -118,6 +118,8 @@ function constructTemplateResponse(template) {
         attachment_id: '',
     })
 }
+
+constructTemplateResponse('quickReply')
 
 function seachMatchingPicture(tag) {
     Flickr.tokenOnly(flickrOptions, function (error, flickr) {

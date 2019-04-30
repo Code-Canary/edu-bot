@@ -1,3 +1,25 @@
+const renderMultipleElements = function(data, templateType){
+  return data.map(item => {
+    if(templateType === 'quickReply'){
+      return {
+        'content_type': 'text',
+        'title': item,
+        'payload': '<POSTBACK_PAYLOAD>',
+      }
+    }
+
+    if(templateType === 'button'){
+      return {
+        'type': 'postback',
+        'title': item,
+        'payload': 'yes',
+      }
+    }
+
+    return [];
+  });
+}
+
 const generic = function ({ title, subtitle, buttons }) {
   return {
     'attachment': {
@@ -8,18 +30,7 @@ const generic = function ({ title, subtitle, buttons }) {
           {
             'title': title,
             'subtitle': subtitle,
-            'buttons': [
-              {
-                'type': 'postback',
-                'title': 'Yes!',
-                'payload': 'yes',
-              },
-              {
-                'type': 'postback',
-                'title': 'No!',
-                'payload': 'no',
-              },
-            ],
+            'buttons': renderMultipleElements(buttons, 'button')
           }],
       },
     },
@@ -29,13 +40,7 @@ const generic = function ({ title, subtitle, buttons }) {
 const quickReply = function({ title, text, postback }) {
   return {
     'text': text,
-    'quick_replies':[
-      {
-        'content_type': 'text',
-        'title': title,
-        'payload': '<POSTBACK_PAYLOAD>',
-      },
-    ],
+    'quick_replies':renderMultipleElements(title, 'quickReply'),
   };
 };
 
@@ -44,9 +49,7 @@ const button = function({ title, buttons }) {
     'payload': {
       'template_type': 'button',
       'text': title,
-      'buttons': [
-        buttons,
-      ],
+      'buttons': renderMultipleElements(buttons, 'button'),
     },
   };
 };
@@ -61,7 +64,7 @@ const list = function ({ title, subtitle, buttons, image_url, url }) {
           'title': title,
           'subtitle': subtitle,
           'image_url': image_url,
-          'buttons': [buttons],
+          'buttons': renderMultipleElements(buttons, 'button'),
           'default_action': {
             'type': 'web_url',
             'url': url,
@@ -106,7 +109,7 @@ const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
             "url": url,
             "webview_height_ratio": "tall",
           },
-          "buttons": [buttons]
+          "buttons": renderMultipleElements(buttons, 'button')
         }
       ]
     }

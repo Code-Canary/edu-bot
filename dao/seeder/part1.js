@@ -48,7 +48,7 @@ const questions = [
     new Question({ // 4
         id: "q004",
         title: "What about this one?",
-        type: "free_text",
+        type: "quick_replies",
         rendered_image_path: "",
         branches: [{
             answer: "yes",
