@@ -42,7 +42,9 @@ async function handleMessage(sender_psid, received_message) {
     //     response = constructTemplateResponse('Nothing');
     // }
 
+    // console.log("WTF");
     postbackResponse = constructResponseMessage(sender_psid, response)
+    console.log(postbackResponse);
     // Send the message to acknowledge the postback
     callSendAPI(postbackResponse);
 }
@@ -119,7 +121,7 @@ function constructTemplateResponse(question) {
     })
 }
 
-function seachMatchingPicture(tag) {
+function searchMatchingPicture(tag) {
     Flickr.tokenOnly(flickrOptions, function (error, flickr) {
         flickr.photos.search({
             tags: tag,
@@ -139,8 +141,9 @@ function seachMatchingPicture(tag) {
 }
 
 module.exports = {
-    constructTemplateResponse,
     handleMessage: handleMessage,
     handlePostback: handlePostback,
-    seachMatchingPicture
+    searchMatchingPicture: searchMatchingPicture,
+    constructTextResponse: constructTextResponse,
+    constructTemplateResponse: constructTemplateResponse
 }

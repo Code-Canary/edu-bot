@@ -3,21 +3,17 @@ let Question = require('../models/question').Question;
 const questions = [
     new Question({ // 0
         id: "q000",
-        title: "Do you want to build homepage?",
-        type: "free_text",
+        title: "Do you want to build homepage? You've come to the right place! Let's get Started!",
+        type: "informative",
         branches: [{
-            answer: "yes",
+            answer: "",
             next_question: "q001",
-        },
-        {
-            answer: "no",
-            next_question: "q00",
         }]
     }),
     new Question({ // 00
         id: "q00",
         title: "Why..Think about again :(",
-        type: "free_text",
+        type: "button",
         branches: [{
             answer: "yes",
             next_question: "q001",
@@ -57,7 +53,7 @@ const questions = [
     new Question({ // 4
         id: "q004",
         title: "Do you like it?",
-        type: "free_text",
+        type: "quickReply",
         branches: [{
             answer: "yes",
             next_question: "q006",
@@ -70,7 +66,7 @@ const questions = [
     new Question({ // 5
         id: "q005",
         title: "What about this one?",
-        type: "free_text",
+        type: "multi_choice",
         branches: [{
             answer: "yes",
             next_question: "q006",
