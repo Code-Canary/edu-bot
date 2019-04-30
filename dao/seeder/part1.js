@@ -4,20 +4,16 @@ const questions = [
     new Question({ // 0
         id: "q000",
         title: "Hi! Do you want to build homepage?",
-        type: "free_text",
+        type: "informative",
         branches: [{
-            answer: "yes",
+            answer: "",
             next_question: "q001",
-        },
-        {
-            answer: "no",
-            next_question: "q00",
         }]
     }),
     new Question({ // 00
         id: "q00",
         title: "Why.. 😭 Please!! 🙏 It will be a lot of fun!",
-        type: "free_text",
+        type: "multi_choice",
         branches: [{
             answer: "yes",
             next_question: "q001",
@@ -63,7 +59,7 @@ const questions = [
     new Question({ // 4
         id: "q004",
         title: "Does it look good? Do you like it? 🤓",
-        type: "free_text",
+        type: "multi_choice",
         branches: [{
             answer: "yes",
             next_question: "q006",

@@ -4,12 +4,11 @@ const renderMultipleElements = function (data, templateType) {
             return {
                 'content_type': 'text',
                 'title': item,
-                'payload': '<POSTBACK_PAYLOAD>',
+                'payload': '{}',
             }
         }
 
         if (templateType === 'button') {
-            console.log('super broken button', item.answer)
             return {
                 'type': 'postback',
                 'title': item.answer,
@@ -38,10 +37,19 @@ const generic = function ({ title, subtitle, buttons }) {
     };
 };
 
-const quickReply = function ({ title, text, postback }) {
+const quickReply = function (title, branches) {
+    let quickReplies = [];
+    branches.forEach(branch => {
+        quickReplies.push({
+            "content_type": "text",
+            "title": branch.answer,
+            "image_url": "",
+            "payload": "{}"
+        });
+    })
     return {
-        'text': text,
-        'quick_replies': renderMultipleElements(title, 'quickReply'),
+        'text': title,
+        'quick_replies': quickReplies
     };
 };
 
@@ -58,23 +66,26 @@ const button = function ({ title, buttons }) {
 
 const multi_choice = function ({ title, subtitle, buttons, image_url, url }) {
     return {
-        'payload': {
-            'template_type': 'list',
-            'top_element_style': '<LARGE | COMPACT>',
-            'elements': [
-                {
-                    'title': title,
-                    'subtitle': subtitle,
-                    'image_url': image_url,
-                    'buttons': renderMultipleElements(buttons, 'button'),
-                    'default_action': {
-                        'type': 'web_url',
-                        'url': url,
-                        'messenger_extensions': 'TRUE',
-                        'webview_height_ratio': 'COMPACT'
+        "attachment": {
+            "type": "template",
+            'payload': {
+                'template_type': 'list',
+                'top_element_style': 'LARGE',
+                'elements': [
+                    {
+                        'title': title,
+                        'subtitle': subtitle,
+                        'image_url': image_url,
+                        'buttons': renderMultipleElements(buttons, 'button'),
+                        'default_action': {
+                            'type': 'web_url',
+                            'url': url,
+                            'messenger_extensions': 'TRUE',
+                            'webview_height_ratio': 'COMPACT'
+                        }
                     }
-                }
-            ]
+                ]
+            }
         }
     }
 };
@@ -113,14 +124,16 @@ const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
                     },
                     "buttons": renderMultipleElements(buttons, 'button')
                 }
+            ]
+        }
     }
-    }
+}
 
-    module.exports = {
-        generic,
-        quickReply,
-        button,
-        multi_choice,
-        media,
-        generic_web
-    };
+module.exports = {
+    generic,
+    quickReply,
+    button,
+    multi_choice,
+    media,
+    generic_web
+};

@@ -20,7 +20,7 @@ const constructTemplateResponse = require('./service/messengerService').construc
 const seachMatchingPicture = require('./service/messengerService').seachMatchingPicture;
 
 // Call seeder for sample lessons.
-// require('./dao/seeder/lessonSeeder');
+require('./dao/seeder/lessonSeeder');
 
 /**
  * Express Sections

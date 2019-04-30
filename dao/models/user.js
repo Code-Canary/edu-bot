@@ -10,6 +10,7 @@ var userSchema = new mongoose.Schema({
         answers: [{
             placeholder: String,
             value: String,
+            questionId: String,
             question: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Question'
