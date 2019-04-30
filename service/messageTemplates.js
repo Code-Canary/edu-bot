@@ -9,10 +9,11 @@ const renderMultipleElements = function(data, templateType){
     }
 
     if(templateType === 'button'){
+      console.log('super broken button', item.answer)
       return {
         'type': 'postback',
-        'title': item,
-        'payload': 'yes',
+        'title': item.answer,
+        'payload': item.answer,
       }
     }
 
@@ -44,6 +45,7 @@ const quickReply = function({ title, text, postback }) {
   };
 };
 
+//const freeText = function({ title})
 const button = function({ title, buttons }) {
   return {
     'payload': {
@@ -54,7 +56,7 @@ const button = function({ title, buttons }) {
   };
 };
 
-const list = function ({ title, subtitle, buttons, image_url, url }) {
+const multi_choice = function ({ title, subtitle, buttons, image_url, url }) {
   return {
     'payload': {
       'template_type': 'list',
@@ -120,7 +122,7 @@ module.exports = {
   generic,
   quickReply,
   button,
-  list,
+  multi_choice,
   media,
   generic_web
 };

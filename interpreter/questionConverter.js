@@ -1,19 +1,26 @@
-const messageTemplates = require('./service/messageTemplates');
+const MessageTemplates = require('./service/messageTemplates');
 
 function convertToMessengerFormat(question) {
-    if(question.type == 'quick_replies') {
-        return convertToQuickReplyFormat(question);
-    } else if(question.type == 'list') {
-        return convertToQuickReplyFormat(question);
-    } else if(question.type == 'list') {
-        return convertToListFormat(question);
-    } else {
-        return convertToFreeTextFormat(question);
+    let template = 'free_text';
+    switch (question.type) {
+        case 'multi_choice':
+            template = 'list';
+            break;
     }
+    
+    return MessageTemplates[template]({
+        title: question.title,
+        subtitle: '',
+        buttons: '',
+        image_url: '',
+        url: '',
+        media_type: '',
+        attachment_id: '',
+    })
 }
 
 function convertToQuickReplyFormat(question) {
-    return 
+    return messageTemplates.quickReply()
 }
 
 function convertToQuickReplyFormat(question) {

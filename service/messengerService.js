@@ -107,19 +107,17 @@ function constructTextResponse(message) {
     };
 }
 
-function constructTemplateResponse(template) {
-    return MessageTemplates[template]({
-        title: ['Hey there', 'wasup', 'yoyo'],
+function constructTemplateResponse(question) {
+    return MessageTemplates[question.type]({
+        title: question.title,
         subtitle: '',
-        buttons: '',
-        image_url: '',
+        buttons: question.branches,
+        image_url: question.rendered_image_path,
         url: '',
         media_type: '',
         attachment_id: '',
     })
 }
-
-constructTemplateResponse('quickReply')
 
 function seachMatchingPicture(tag) {
     Flickr.tokenOnly(flickrOptions, function (error, flickr) {
