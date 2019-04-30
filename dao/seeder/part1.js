@@ -149,7 +149,7 @@ const questions = [
     new Question({
         id: "q011",
         title: "Let us change the background color! How should we change the first line? How should it look like?",
-        type: "multi_choice",
+        type: "quickReply",
         branches: [{
             answer: "<div style=\"background‐color: {{q010}}\">",
             next_question: "q013",

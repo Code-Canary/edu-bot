@@ -27,6 +27,11 @@ async function handleMessage(sender_psid, received_message) {
         response = await runLesson(sender_psid, received_message);
     }
 
+    if (response.type === 'informative') {
+        setTimeout(() => {
+            handleMessage(sender_psid, received_message);
+        }, 1000);
+    }
     // else if (received_message.attachments) {
     //     // Get the URL of the message attachment
     //     // let attachment_url = received_message.attachments[0].payload.url;
@@ -34,7 +39,7 @@ async function handleMessage(sender_psid, received_message) {
     // }
 
     // console.log("WTF");
-    postbackResponse = constructResponseMessage(sender_psid, response)
+    postbackResponse = constructResponseMessage(sender_psid, response.response)
     console.log(postbackResponse);
     // Send the message to acknowledge the postback
     callSendAPI(postbackResponse);

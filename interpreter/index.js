@@ -89,22 +89,23 @@ const runLesson = async (sender_psid, received_message) => {
                 await codeAsImage(question.code);
                 response = constructImageResponse(question.title, imagePath(question.code));
                 await user.save();
-                return response;
+                return { response, type: question.type };
             case 'preview':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
                 var html = fill(question.code, currentLesson.answers);
                 await htmlAsImage(html);
-                response = constructImageResponse(question.title, imagePath(question.code));
+                response = constructImageResponse(fill(question.title, currentLesson.answers), imagePath(question.code));
                 await user.save();
-                return response;
+                return { response, type: question.type };
             case 'informative':
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
-                return runLesson(sender_psid, received_message);
+                // await runLesson(sender_psid, received_message);
+                return { response, type: question.type };
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
@@ -113,7 +114,7 @@ const runLesson = async (sender_psid, received_message) => {
                 currentLesson.progress = newProgress;
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
-                return response;
+                return { response, type: question.type };
             // } else {
             //     return defaultResponse;
             // }
@@ -123,14 +124,14 @@ const runLesson = async (sender_psid, received_message) => {
                  * a correct response message structure should be sent
                  * */
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
-                question = await Question.findOne({ id: question.branches[0].next_question });
                 // let filterQuestion = question;
                 // filterQuestion.title = fill(question.title, currentLesson.answers);
                 response = quickReply(question.title, question.branches);
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 await user.save();
-                return response;
+                return { response, type: question.type };
         }
     }
 }
