@@ -51,8 +51,8 @@ async function handlePostback(sender_psid, received_postback) {
     var response;
     // Get the payload for the postback
     let payload = received_postback.payload;
+    console.log("Postback payload:", payload);
 
-    console.log("Postback response:", received_postback);
     if (received_postback.payload === "started") {
         var user = await User.findOne({ sender_psid: sender_psid }).exec();
 
@@ -75,6 +75,7 @@ async function handlePostback(sender_psid, received_postback) {
             await user.save();
         }
 
+        // Sending intro messages
         const question = await Question.findOne({ id: 'q000' });
         response = quickReply(question.title, question.branches);
         let postbackResponse = constructResponseMessage(sender_psid, response)

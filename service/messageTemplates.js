@@ -86,7 +86,7 @@ const quickReply = function (title, branches) {
             "content_type": "text",
             "title": branch.answer,
             "image_url": "",
-            "payload": "{}"
+            "payload": branch.answer
         });
     })
     return {
