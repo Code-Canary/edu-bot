@@ -29,6 +29,8 @@ async function handleMessage(sender_psid, received_message) {
         response = await runLesson(sender_psid, received_message);
     }
 
+    console.log("Response being sent:", response);
+
     if (response.type === 'informative' || response.type === 'preview' || response.type === 'code') {
         setTimeout(() => {
             handleMessage(sender_psid, received_message);
@@ -42,7 +44,7 @@ async function handleMessage(sender_psid, received_message) {
 
     // console.log("WTF");
     postbackResponse = constructResponseMessage(sender_psid, response.response)
-    console.log(postbackResponse);
+    console.log("Full Response being sent:", postbackResponse);
     // Send the message to acknowledge the postback
     callSendAPI(postbackResponse);
 }
