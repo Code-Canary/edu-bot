@@ -3,7 +3,7 @@ let Question = require('../models/question').Question;
 const questions = [
     new Question({ // 0
         id: "q000",
-        title: "Do you want to build homepage? You've come to the right place! Let's get Started!",
+        title: "Do you want to build homepage?",
         type: "informative",
         branches: [{
             answer: "",

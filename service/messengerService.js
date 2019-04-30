@@ -69,10 +69,7 @@ async function handlePostback(sender_psid, received_postback) {
         response = constructTextResponse(question.title);
         let postbackResponse = constructResponseMessage(sender_psid, response)
 
-        // Send the message to acknowledge the postback
-        // callSendAPI(postbackResponse);
-
-        let followupResponse = constructTextResponse("Do you want to build homepage? You've come to the right place! Let's get Started!");
+        let followupResponse = constructTextResponse("Welcome to Code Canary! You've come to the right place to learn code in a very fun way. Let's get Started!");
         callSendAPI(constructResponseMessage(sender_psid, followupResponse))
 
         setTimeout(function () {

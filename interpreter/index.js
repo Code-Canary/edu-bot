@@ -64,30 +64,6 @@ const runLesson = async (sender_psid, received_message) => {
 
     var response = {};
 
-    // if (user.lessons.length === 0 && userInput !== 'Start') {
-    //     return defaultResponse;
-    // }
-
-    // STARTING
-    // if (user.lessons.length === 0) {
-    //     const lessonOne = await Lesson.findOne();
-
-    //     await user.lessons.push({
-    //         lesson_info: lessonOne,
-    //         status: "in_progress",
-    //         progress: 'q000',
-    //     });
-
-    //     const question = await Question.findOne({ id: 'q000' });
-    //     response = constructTextResponse(fill(question.title, user.lessons[0].answers));
-
-
-
-    //     user.lessons[0].progress = "q001"
-    //     await user.save();
-    //     return response;
-    // }
-
     // NORMAL CASE
     let newProgress;
     const currentLesson = user.lessons[0];
