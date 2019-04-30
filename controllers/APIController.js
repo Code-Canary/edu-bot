@@ -67,7 +67,11 @@ function handleWebhookEvent(req, res) {
             if (webhook_event.message) {
                 console.log("Webhook message", webhook_event.message);
                 messengerService.handleMessage(sender_psid, webhook_event.message);
+            } if (webhook_event.message.quick_reply) {
+                console.log("Webhook message", { text: webhook_event.message.quick_reply.payload });
+                messengerService.handleMessage(sender_psid, webhook_event.message);
             } else {
+
                 console.log("webhook payload", webhook_event.postback);
                 messengerService.handlePostback(sender_psid, webhook_event.postback);
             }
