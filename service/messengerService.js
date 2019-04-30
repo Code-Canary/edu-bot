@@ -75,7 +75,7 @@ async function handlePostback(sender_psid, received_postback) {
 
         setTimeout(function () {
             callSendAPI(postbackResponse);
-        }, 2000);
+        }, 3000);
 
     } else {
         // Set the response based on the postback payload
