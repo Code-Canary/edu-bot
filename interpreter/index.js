@@ -68,7 +68,7 @@ const runLesson = async (sender_psid, received_message) => {
     let newProgress;
     const currentLesson = user.lessons[0];
     const currentProgress = currentLesson.progress;
-    const question = await Question.findOne({ id: currentProgress });
+    var question = await Question.findOne({ id: currentProgress });
 
     if (question) {
         // Question that doesnt require answer
@@ -82,7 +82,11 @@ const runLesson = async (sender_psid, received_message) => {
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
+                if (currentProgress === "q001") {
+                    question = await Question.findOne({ id: question.branches[0].next_question });
+                }
                 newProgress = question.branches[0].next_question;
+
                 currentLesson.progress = newProgress;
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
