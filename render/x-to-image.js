@@ -1,14 +1,16 @@
-const fs = require("fs");
-const path = require("path");
+const request = require('request');
 
-const src2img = require("src2img");
-const puppeteer = require("puppeteer");
+const fs = require('fs');
+const path = require('path');
+
+const src2img = require('src2img');
+const puppeteer = require('puppeteer');
 
 let mustache_regex = /{{\s*([^}]+)\s*}}/g;
 
-let placeholderCharacter = "█";
+let placeholderCharacter = '█';
 
-const out = "./generated";
+const out = './generated';
 
 const getPlaceholders = template => template.match(mustache_regex) || [];
 
@@ -43,60 +45,71 @@ const saveImage = code => image => {
 
 const codeAsImage = code => {
     const placeholders = getPlaceholders(code).reduce((placeholders, key) => {
-        placeholders[key.trim()] = key
-            .split("")
-            .map(_ => placeholderCharacter)
-            .join("");
+        placeholders[key.trim()] = key.split('').
+            map(_ => placeholderCharacter).
+            join('');
         return placeholders;
     }, {});
     const imageInput = fillTheBlanks(code, placeholders);
 
-    return src2img({
-        fontSize: 20, // Font size and unit control the size and quality of the image
-        fontSizeUnit: "pt",
-        padding: 3,
-        paddingUnit: "vw", // Using 'px' does not scale with font size
-        type: "png", // png or jpeg
-        src: [
-            [
-                imageInput,
-                "html" // See https://www.npmjs.com/package/filename2prism for getting alias from filename
+    console.log(imageInput);
+
+    const data = {
+        html: imageInput,
+        css: '.box { border: 4px solid #03B875; padding: 20px; font-family: \'Roboto\'; }',
+        google_fonts: 'Roboto',
+    };
+
+    // Create an image by sending a POST to the API.
+    // Retrieve your api_id and api_key from the Dashboard. https://htmlcsstoimage.com/dashboard
+    return new Promise(resolve =>{
+        request.post({ url: 'https://hcti.io/v1/image', form: data })
+        .auth('cbff0965-5a63-4fbd-88dd-a829115494bc', '57df2efb-388e-442e-b2a5-5cffca850772')
+        .on('data', resolve);
+    }).then(JSON.parse)
+
+    /*    return src2img({
+            fontSize: 20, // Font size and unit control the size and quality of the image
+            fontSizeUnit: "pt",
+            padding: 3,
+            paddingUnit: "vw", // Using 'px' does not scale with font size
+            type: "png", // png or jpeg
+            src: [
+                [
+                    imageInput,
+                    "html" // See https://www.npmjs.com/package/filename2prism for getting alias from filename
+                ]
             ]
-        ]
-    })
-        .then(images =>
-            Promise.all(
-                images.map(saveImage)
+        })
+            .then(images =>
+                Promise.all(
+                    images.map(saveImage)
+                )
             )
-        )
-        .catch(error => {
-            console.error(error);
-        });
+            .catch(error => {
+                console.error(error);
+            });*/
 };
 
 const htmlAsImage = html =>
     puppeteer.launch().then(browser =>
-        browser
-            .newPage()
-            .then(page =>
-                page
-                    .setContent(html, { waitUntil: "networkidle0" })
-                    //   .then(() => page.evaluate(() => {
-                    //     const element = document.body
-                    //     return [element.offsetWidth, element.offsetHeight]
-                    //   }))
-                    //   .then(([width, height]) => page.setViewport({ width, height }))
-                    .then(() => page.setViewport({ width: 780, height: 410 }))
-                    .then(() =>
-                        page.screenshot({
-                            type: "png",
-                            omitBackground: true,
-                            fullPage: false
-                        })
-                    )
-                    .then(saveImage(html))
-            )
-            .then(() => browser.close())
+        browser.newPage().then(page =>
+            page.setContent(html, { waitUntil: 'networkidle0' })
+            //   .then(() => page.evaluate(() => {
+            //     const element = document.body
+            //     return [element.offsetWidth, element.offsetHeight]
+            //   }))
+            //   .then(([width, height]) => page.setViewport({ width, height }))
+                .then(() => page.setViewport({ width: 780, height: 410 })).
+                then(() =>
+                    page.screenshot({
+                        type: 'png',
+                        omitBackground: true,
+                        fullPage: false,
+                    }),
+                ).
+                then(saveImage(html)),
+        ).then(() => browser.close()),
     );
 
 module.exports = {
@@ -104,7 +117,7 @@ module.exports = {
     codeAsImage,
     getPlaceholders,
     fillTheBlanks,
-    imagePath
+    imagePath,
 };
 
 // Example usage:
