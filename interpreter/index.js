@@ -3,9 +3,51 @@ const { Lesson } = require('../dao/models/lesson');
 const { Question } = require('../dao/models/question');
 const { quickReply } = require('../service/messageTemplates');
 
+const {getPlaceholders, fillTheBlanks} = require("../render/x-to-image");
+
 const constructTextResponse = (message) => ({
     "text": message,
 });
+
+const shaveMustache = t => t.replace("{{", "").replace("}}", "");
+const growMustache = t => `{{${t}}}`;
+
+/**
+ * Fills in a string which may have placeholders
+ * @param {string} text 
+ * @param {[{question: string, value: string}]} answers 
+ */
+const fill = (text, answers) => {
+  const matches = getPlaceholders(text) || [];
+    const placeholders = matches.map(shaveMustache).reduce((placeholders, match) => {
+      const idx = answers.findIndex(({question}) => question == match);
+      if(idx >= 0){
+        const {question, value} = answers[idx];
+        placeholders[growMustache(question)] = value
+      }
+      return placeholders;
+    }, {})
+  
+  return fillTheBlanks(text, placeholders);
+};
+
+/*
+console.log(
+  fill("Great! I love {{q001}} & {{q000}}!", [
+    {question: "q000", value: "dogs"},
+    {question: "q001", value: "cats"},
+    {question: "q002", value: "bananas"},
+  ]) // > Great! I love cats & dogs!
+)
+
+console.log(
+  fill("I love bananas!", [
+    {question: "q000", value: "dogs"},
+    {question: "q001", value: "cats"},
+    {question: "q002", value: "bananas"},
+  ]) // > I love bananas!
+)
+*/
 
 /**
  * Returns a response
@@ -62,7 +104,7 @@ const runLesson = async (sender_psid, received_message) => {
     console.log({ currentProgress, question });
 
     if (question) {
-        response = constructTextResponse(question.title);
+        response = constructTextResponse(fill(question.title, currentLesson.answers));
 
         // const previousAnswer = currentLesson.answers.find(answer => answer.question === currentProgress);
         // console.log({ previousAnswer });
@@ -75,7 +117,7 @@ const runLesson = async (sender_psid, received_message) => {
             // TODO: Save user selection here
             currentLesson.answers.push({ value: userInput, question: question._id });
             newProgress = question.branches[0].next_question;
-            user.lessons[0].progress = newProgress;
+            currentLesson.progress = newProgress;
             await user.save();
             return response;
         }
@@ -86,7 +128,7 @@ const runLesson = async (sender_psid, received_message) => {
             if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, question: question._id });
                 newProgress = question.branches[0].next_question;
-                user.lessons[0].progress = newProgress;
+                currentLesson.progress = newProgress;
                 await user.save();
                 return response;
             } else {
@@ -107,7 +149,7 @@ const runLesson = async (sender_psid, received_message) => {
                 "payload": "{}"
             });
         })
-        response = quickReply(question.title, quickReplies);
+        response = quickReply(fill(question.title, currentLesson.answers), quickReplies);
         if (newProgress === undefined) {
             // free text
             // TODO: Add free text handling here!
