@@ -32,10 +32,13 @@ const hashCode = str => {
   return hash;
 };
 
-const saveImage = code => image => {
+const imagePath = code => {
   const filename = `${hashCode(code)}.png`;
-  const filePath = path.join(out, filename);
-  return fs.writeFileSync(filePath, image);
+  return path.join(out, filename);
+};
+
+const saveImage = code => image => {
+  return fs.writeFileSync(imagePath(code), image);
 };
 
 const codeAsImage = code => {
@@ -61,11 +64,11 @@ const codeAsImage = code => {
       ]
     ]
   })
-    .then(images => {
+    .then(images => 
       Promise.all(
         images.map(saveImage)
-      );
-    })
+      )
+    )
     .catch(error => {
       console.error(error);
     });
@@ -100,7 +103,8 @@ module.exports = {
     htmlAsImage,
     codeAsImage,
     getPlaceholders,
-    fillTheBlanks
+    fillTheBlanks,
+    imagePath
 };
 
 // Example usage:  

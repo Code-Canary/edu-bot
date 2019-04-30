@@ -8,10 +8,28 @@ const { quickReply } = require('../service/messageTemplates');
 const messengerService = require('../service/messengerService');
 const MessageTemplates = require('../service/messageTemplates');
 
-const { getPlaceholders, fillTheBlanks } = require("../render/x-to-image");
+const { getPlaceholders, fillTheBlanks, codeAsImage, imagePath, htmlAsImage } = require("../render/x-to-image");
 
 const constructTextResponse = (message) => {
     return { "text": message }
+}
+
+const constructImageResponse = (title, image_url) => {
+    return {
+        attachment: {
+          "type":"template",
+          "payload": {
+            "template_type":"generic",
+            "elements":[
+               {
+                title,
+                image_url,
+                //"subtitle":"<SUBTITLE_TEXT>", //TODO: maybe this is better than title?
+              },
+            ]
+          }
+        }
+      }
 }
 
 const shaveMustache = t => t.replace("{{", "").replace("}}", "");
@@ -64,6 +82,22 @@ const runLesson = async (sender_psid, received_message) => {
     if (question) {
         // Question that doesnt require answer
         switch (question.type) {
+        //TODO: imagePath may need domain prepended...
+            case 'code':
+                newProgress = question.branches[0].next_question;
+                currentLesson.progress = newProgress;
+                await codeAsImage(question.code);
+                response = constructImageResponse(question.title, imagePath(question.code));
+                await user.save();
+                return response;
+            case 'preview':
+                newProgress = question.branches[0].next_question;
+                currentLesson.progress = newProgress;
+                var html = fill(question.code, currentLesson.answers);
+                await htmlAsImage(html);
+                response = constructImageResponse(question.title, imagePath(question.code));
+                await user.save();
+                return response;
             case 'informative':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
