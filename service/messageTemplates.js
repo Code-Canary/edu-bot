@@ -1,3 +1,26 @@
+const renderMultipleElements = function (data, templateType) {
+    return data.map(item => {
+        if (templateType === 'quickReply') {
+            return {
+                'content_type': 'text',
+                'title': item,
+                'payload': '<POSTBACK_PAYLOAD>',
+            }
+        }
+
+        if (templateType === 'button') {
+            console.log('super broken button', item.answer)
+            return {
+                'type': 'postback',
+                'title': item.answer,
+                'payload': item.answer,
+            }
+        }
+
+        return [];
+    });
+}
+
 const generic = function ({ title, subtitle, buttons }) {
     return {
         'attachment': {
@@ -8,44 +31,32 @@ const generic = function ({ title, subtitle, buttons }) {
                     {
                         'title': title,
                         'subtitle': subtitle,
-                        'buttons': [
-                            {
-                                'type': 'postback',
-                                'title': 'Yes!',
-                                'payload': 'yes',
-                            },
-                            {
-                                'type': 'postback',
-                                'title': 'No!',
-                                'payload': 'no',
-                            },
-                        ],
+                        'buttons': renderMultipleElements(buttons, 'button')
                     }],
             },
         },
     };
 };
 
-const quickReply = function (text, quickReplies) {
+const quickReply = function ({ title, text, postback }) {
     return {
         'text': text,
-        'quick_replies': quickReplies,
+        'quick_replies': renderMultipleElements(title, 'quickReply'),
     };
 };
 
+//const freeText = function({ title})
 const button = function ({ title, buttons }) {
     return {
         'payload': {
             'template_type': 'button',
             'text': title,
-            'buttons': [
-                buttons,
-            ],
+            'buttons': renderMultipleElements(buttons, 'button'),
         },
     };
 };
 
-const list = function ({ title, subtitle, buttons, image_url, url }) {
+const multi_choice = function ({ title, subtitle, buttons, image_url, url }) {
     return {
         'payload': {
             'template_type': 'list',
@@ -55,19 +66,19 @@ const list = function ({ title, subtitle, buttons, image_url, url }) {
                     'title': title,
                     'subtitle': subtitle,
                     'image_url': image_url,
-                    'buttons': [buttons],
+                    'buttons': renderMultipleElements(buttons, 'button'),
                     'default_action': {
                         'type': 'web_url',
                         'url': url,
                         'messenger_extensions': 'TRUE',
-                        'webview_height_ratio': 'COMPACT',
-                    },
-                },
-            ],
-            'buttons': [],
-        },
-    };
+                        'webview_height_ratio': 'COMPACT'
+                    }
+                }
+            ]
+        }
+    }
 };
+
 
 const media = function ({ media_type, attachment_id }) {
     return {
@@ -100,18 +111,16 @@ const generic_web = function ({ title, image_url, subtitle, url, buttons }) {
                         "url": url,
                         "webview_height_ratio": "tall",
                     },
-                    "buttons": [buttons]
+                    "buttons": renderMultipleElements(buttons, 'button')
                 }
-            ]
-        }
     }
-}
+    }
 
-module.exports = {
-    generic,
-    quickReply,
-    button,
-    list,
-    media,
-    generic_web
-};
+    module.exports = {
+        generic,
+        quickReply,
+        button,
+        multi_choice,
+        media,
+        generic_web
+    };
