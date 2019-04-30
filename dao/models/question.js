@@ -9,6 +9,7 @@ var questionSchema = new mongoose.Schema({
     }], // empty for informative
     type: String, // free_text, multi_choice, informative -> ignore answer value, code
     code: String,
+    url: String,
     rendered_image_path: String,
 }, { timestamps: true });
 

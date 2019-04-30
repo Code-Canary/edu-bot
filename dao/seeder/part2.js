@@ -55,6 +55,7 @@ const questions = [
                 <h1>Tiger</h1>
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%252520%252520%252520%252520%25253Ch1%25253ETiger%25253C%25252Fh1%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [{
             answer: null,
             next_question: "q105",
@@ -69,6 +70,7 @@ const questions = [
                 <h1>Tiger</h1>
             </div>
         `,
+        url: '',
         branches: [{
             answer: null,
             next_question: "q106",
@@ -76,13 +78,14 @@ const questions = [
     }),
     new Question({
         id: "q106",
-        title: "Ups, I put in my favorite animal 😇🐯 here. Let's change that with {{q015}} which you picked before!",
+        title: "Ups, I put in my favorite animal 😇🐯 here. Let's change that with {{q019}} which you picked before!",
         type: "code",
         code: `
             <div style="background-color: yellow;">
-                <h1>{{q015}}</h1>
+                <h1>Books</h1>
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%252520%252520%252520%252520%25253Ch1%25253EBooks%25253C%25252Fh1%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [
             {
                 answer: null,
@@ -96,9 +99,10 @@ const questions = [
         type: "preview",
         code: `
             <div style="background-color: yellow;">
-                <h1>{{q015}}</h1>
+                <h1>{{q019}}</h1>
             </div>
         `,
+        url: '',
         branches: [
             {
                 answer: null,
@@ -151,10 +155,11 @@ const questions = [
         type: "code",
         code: `
             <div style="background-color: yellow;">
-                <h1>{{q015}}</h1>
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <h1>Books</h1>
+                <img src="https://tinyurl.com/y2olfpz8" />
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%252520%252520%252520%252520%25253Ch1%25253EBooks%25253C%25252Fh1%25253E%25250A%252520%252520%252520%252520%25253Cimg%252520src%25253D%252522https%25253A%25252F%25252Ftinyurl.com%25252Fy2olfpz8%252522%252520%25252F%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [
             {
                 answer: null,
@@ -168,10 +173,11 @@ const questions = [
         type: "preview",
         code: `
             <div style="background-color: yellow;">
-                <h1>{{q015}}</h1>
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <h1>{{q019}}</h1>
+                <img src="{{IMAGE FROM SEARCH ABOUT q019}}" />
             </div>
         `,
+        url: '',
         branches: [
             {
                 answer: null,
@@ -193,9 +199,10 @@ const questions = [
         type: "code",
         code: `
             <div style="background-color: yellow;">
-                <img src="https://static-s.aa-cdn.net/img/ios/1257058542/043b79364f061339587887aa850afc89?v=1" />
+                <img src="https://tinyurl.com/y4lq7k3w" />
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%252520%252520%252520%252520%25253Cimg%252520src%25253D%252522https%25253A%25252F%25252Ftinyurl.com%25252Fy4lq7k3w%252522%252520%25252F%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [{
             answer: null,
             next_question: "q113",
@@ -207,9 +214,10 @@ const questions = [
         type: "preview",
         code: `
             <div style="background-color: yellow;">
-                <img src="https://static-s.aa-cdn.net/img/ios/1257058542/043b79364f061339587887aa850afc89?v=1" />
+                <img src="https://tinyurl.com/y4lq7k3w" />
             </div>
         `,
+        url: '',
         branches: [{
             answer: null,
             next_question: "q114",
@@ -217,13 +225,14 @@ const questions = [
     }),
     new Question({
         id: "q114",
-        title: "I put in my favorite animal 😇🐯 here. You surely want the image to rather be '{{q015}}!",
+        title: "I put in my favorite animal 😇🐯 here. You surely want the image to rather be '{{q019}}!",
         type: "code",
         code: `
             <div style="background-color: yellow;">
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <img src="https://tinyurl.com/y2olfpz8" />
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%252520%252520%252520%252520%25253Cimg%252520src%25253D%252522https%25253A%25252F%25252Ftinyurl.com%25252Fy2olfpz8%252522%252520%25252F%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [
             {
                 answer: null,
@@ -276,8 +285,8 @@ const questions = [
         type: "code",
         code: `
             <div style="background-color: yellow;">
-                <h1>{{q015}}</h1>
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <h1>{{q019}}</h1>
+                <img src="{{IMAGE FROM SEARCH ABOUT q019}}" />
             </div>
         `,
         branches: [
@@ -339,8 +348,8 @@ const questions = [
         type: "code",
         code: `
             <div style="background-color: {{q132}};">
-                <h1>{{q015}}</h1>
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <h1>{{q019}}</h1>
+                <img src="{{IMAGE FROM SEARCH ABOUT q019}}" />
             </div>
         `,
         branches: [
@@ -356,8 +365,8 @@ const questions = [
         type: "preview",
         code: `
             <div style="background-color: {{q132}};">
-                <h1>{{q015}}</h1>
-                <img src="{{IMAGE FROM SEARCH ABOUT q015}}" />
+                <h1>{{q019}}</h1>
+                <img src="{{IMAGE FROM SEARCH ABOUT q019}}" />
             </div>
         `,
         branches: [
