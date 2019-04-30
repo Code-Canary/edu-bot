@@ -82,7 +82,7 @@ const runLesson = async (sender_psid, received_message) => {
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
-                if (currentProgress === "q001") {
+                if (currentProgress === "q000") {
                     question = await Question.findOne({ id: question.branches[0].next_question });
                 }
                 newProgress = question.branches[0].next_question;

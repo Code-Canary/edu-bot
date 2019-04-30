@@ -75,9 +75,11 @@ async function handlePostback(sender_psid, received_postback) {
         let startingMessage = constructTextResponse("Welcome to Code Canary! You've come to the right place to learn code in a very fun way. Let's get Started!");
         callSendAPI(constructResponseMessage(sender_psid, startingMessage))
 
-        // setTimeout(function () {
-        //     callSendAPI(postbackResponse);
-        // }, 3000);
+        setTimeout(function () {
+            callSendAPI(postbackResponse);
+        }, 3000);
+
+        return;
 
     } else {
         // Set the response based on the postback payload
