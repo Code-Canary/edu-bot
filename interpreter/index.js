@@ -8,7 +8,7 @@ const { quickReply, list } = require('../service/messageTemplates');
 const messengerService = require('../service/messengerService');
 const MessageTemplates = require('../service/messageTemplates');
 
-const { getPlaceholders, fillTheBlanks, codeAsImage, imagePath, htmlAsImage } = require("../render/x-to-image");
+const { getPlaceholders, fillTheBlanks, codeAsImage } = require("../render/x-to-image");
 
 const constructTextResponse = (message) => {
     return { "text": message }
@@ -86,7 +86,7 @@ const runLesson = async (sender_psid, received_message) => {
             case 'code':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
-                var {url} = await codeAsImage(question.code);
+                let {url} = await codeAsImage(question.code);
                 response = constructImageResponse(question.title, url);
                 await user.save();
                 return { response, type: question.type };
@@ -94,8 +94,8 @@ const runLesson = async (sender_psid, received_message) => {
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
                 var html = fill(question.code, currentLesson.answers);
-                await htmlAsImage(html);
-                response = constructImageResponse(fill(question.title, currentLesson.answers), imagePath(question.code));
+                let {url_2} = await codeAsImage(question.code);
+                response = constructImageResponse(fill(question.title, currentLesson.answers), url_2);
                 await user.save();
                 return { response, type: question.type };
             case 'informative':
