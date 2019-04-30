@@ -19,7 +19,7 @@ const constructImageResponse = (title, image_url) => {
         "attachment": {
             "type": "image",
             "payload": {
-                image_url,
+                "url": image_url,
                 "is_reusable": true
                 //"subtitle":"<SUBTITLE_TEXT>", //TODO: maybe this is better than title?
             }
@@ -129,8 +129,8 @@ const runLesson = async (sender_psid, received_message) => {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
                 // let filterQuestion = question;
                 // filterQuestion.title = fill(question.title, currentLesson.answers);
-                response = quickReply(question.title, question.branches);
                 question = await Question.findOne({ id: question.branches[0].next_question });
+                response = quickReply(question.title, question.branches);
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 await user.save();

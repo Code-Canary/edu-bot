@@ -84,7 +84,7 @@ async function handlePostback(sender_psid, received_postback) {
 
         setTimeout(function () {
             callSendAPI(postbackResponse);
-        }, 3000);
+        }, 2000);
 
         return;
 
