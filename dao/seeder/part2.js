@@ -2,9 +2,8 @@ let Question = require('../models/question').Question;
 
 const questions = [
     new Question({
-
         id: "q100",
-        title: "Oh right, it's because div elements behave like baloons 🎈. When there's nothing in them, they are flat like a pancake.",
+        title: "Oh right, it's because div elements behave like baloons 🎈. When there's nothing in them, they are flat like a pancake. 🥞",
         type: "informative",
         branches: [{
             answer: null,
@@ -13,7 +12,7 @@ const questions = [
     }),
     new Question({
         id: "q101",
-        title: "So let's fill it up",
+        title: "So let's fill it up! 💁🏼‍",
         type: "informative",
         branches: [{
             answer: null,
@@ -22,7 +21,7 @@ const questions = [
     }),
     new Question({
         id: "q102",
-        title: "Something has to go between the two lines",
+        title: "Something has to go between the two lines! ↔️",
         type: "informative",
         branches: [{
             answer: null,
@@ -31,7 +30,7 @@ const questions = [
     }),
     new Question({
         id: "q103",
-        title: "What should we fill in?",
+        title: "What should we fill in? 🙃",
         type: "multi_choice",
         branches: [
             {
@@ -49,7 +48,7 @@ const questions = [
 
     new Question({
         id: "q104",
-        title: "Great! Here's how our code looks like now:",
+        title: "Great! Here's how our code looks like now: 👀",
         type: "code",
         code: `
             <div style="background-color: yellow;">
@@ -63,7 +62,7 @@ const questions = [
     }),
     new Question({
         id: "q105",
-        title: "And this is our page so far. So neat!",
+        title: "And this is our page so far. So neat! 🎁",
         type: "preview",
         code: `
             <div style="background-color: yellow;">
@@ -109,7 +108,7 @@ const questions = [
     }),
     new Question({
         id: "q108",
-        title: "So, what's next? - We still need an image! Which html tag should we use for it?",
+        title: "So, what's next? 😇 - We still need an image! 🌅 Which html tag should we use for it? 🤔",
         type: "multi_choice",
         branches: [
             {
@@ -129,7 +128,7 @@ const questions = [
     // Wrong answer
     new Question({
         id: "q109",
-        title: "That's not quite it. Please try again!",
+        title: "That's not quite it. Please try again! 🙂",
         type: "multi_choice",
         branches: [
             {
@@ -148,7 +147,7 @@ const questions = [
     }),
     new Question({
         id: "q110",
-        title: "That's it champion! This is your code now!",
+        title: "That's it champion! 🥇🍾 This is your code now!",
         type: "code",
         code: `
             <div style="background-color: yellow;">
@@ -190,7 +189,7 @@ const questions = [
 
     new Question({
         id: "q112",
-        title: "Great! Here's how our code looks like now:",
+        title: "Great! 🥇🍾 Here's how our code looks like now:",
         type: "code",
         code: `
             <div style="background-color: yellow;">
@@ -204,7 +203,7 @@ const questions = [
     }),
     new Question({
         id: "q113",
-        title: "And this is the rendered homepage. 'Rendered' means that the code is not drawn into your browser:",
+        title: "And this is the rendered homepage. 'Rendered' means that the code is not drawn into your browser: 🖍🎨",
         type: "preview",
         code: `
             <div style="background-color: yellow;">
@@ -234,7 +233,7 @@ const questions = [
     }),
     new Question({
         id: "q115",
-        title: "So, what's next? - We still need a title! Which html tag should we use for it?",
+        title: "So, what's next? - We still need a title! 📣 Which html tag should we use for it?",
         type: "multi_choice",
         branches: [
             {
@@ -254,7 +253,7 @@ const questions = [
     // Wrong answer
     new Question({
         id: "q116",
-        title: "That's not quite it. Please try again!",
+        title: "That's not quite it. Please try again! 🙂",
         type: "multi_choice",
         branches: [
             {
@@ -273,7 +272,7 @@ const questions = [
     }),
     new Question({
         id: "q117",
-        title: "That's it champion! This is your code now. I took the liberty of entering a title for you already.",
+        title: "That's it champion! 🥇🍾 This is your code now. I took the liberty of entering a title for you already.",
         type: "code",
         code: `
             <div style="background-color: yellow;">
@@ -297,7 +296,7 @@ const questions = [
 
     new Question({
         id: "q130",
-        title: "Do you want to change the color?",
+        title: "Do you want to change the color? 🎨",
         type: "multi-choice",
         branches: [
             {

@@ -86,8 +86,8 @@ const runLesson = async (sender_psid, received_message) => {
             case 'code':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
-                await codeAsImage(question.code);
-                response = constructImageResponse(question.title, imagePath(question.code));
+                var {url} = await codeAsImage(question.code);
+                response = constructImageResponse(question.title, url);
                 await user.save();
                 return { response, type: question.type };
             case 'preview':
