@@ -342,7 +342,7 @@ const questions = [
                 answer: "yellow",  // pick this one!
                 next_question: "q026",
             },
-    ]
+        ]
     }),
     new Question({
         id: "q026",

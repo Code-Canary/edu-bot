@@ -79,23 +79,23 @@ const runLesson = async (sender_psid, received_message) => {
         switch (question.type) {
             //TODO: imagePath may need domain prepended...
             case 'code':
-                question = await Question.findOne({ id: question.branches[0].next_question });
-                newProgress = question.id;
+                newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
                 return { response, type: question.type };
             case 'preview':
-                question = await Question.findOne({ id: question.branches[0].next_question });
-                newProgress = question.id;
+                newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
                 return { response, type: question.type };
             case 'informative':
-                question = await Question.findOne({ id: question.branches[0].next_question });
-                newProgress = question.id;
+                newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
                 // await runLesson(sender_psid, received_message);
@@ -104,9 +104,9 @@ const runLesson = async (sender_psid, received_message) => {
                 // if (userInput === question.branches[0].answer) {
                 var correctBranch = question.branches.find(branch => branch.answer === userInput);
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
-                question = await Question.findOne({ id: question.branches[0].next_question });
-                newProgress = question.id;
+                newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 response = constructTextResponse(fill(question.title, currentLesson.answers));
                 await user.save();
                 return { response, type: question.type };
