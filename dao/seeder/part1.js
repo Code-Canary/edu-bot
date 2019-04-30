@@ -56,10 +56,11 @@ const questions = [
         type: "preview",
         code: `
             <div style="background-color: beige;">
-                <h1>{{q001}}</h1>
-                <img src="{{q001}}" />
+                <h1>Dogs</h1>
+                <img src="https://tinyurl.com/y2shswoe" />
             </div>
         `,
+        url: '',
         branches: [{
             answer: null,
             next_question: "q004",
@@ -102,10 +103,11 @@ const questions = [
         type: "code",
         code: `
             <div style="background-color: beige;">
-                <h1>{{q001}}</h1>
-                <img src="{{q001}}" />
+                <h1>Dogs</h1>
+                <img src="https://tinyurl.com/y2shswoe" />
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520beige%25253B%252522%25253E%25250A%252520%252520%252520%25253Ch1%25253EDogs%25253C%25252Fh1%25253E%25250A%252520%252520%252520%25253Cimg%252520src%25253D%252522https%25253A%25252F%25252Ftinyurl.com%25252Fy2shswoe%252522%252520%25252F%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [{
             answer: null,
             next_question: "q008",
@@ -151,7 +153,7 @@ const questions = [
         title: "So, please tell me your favorite color 🎨:",
         type: "free_text",
         branches: [{
-            answer: "",
+            answer: "",  // has to be 'green'
             next_question: "q011",
         }]
     }),
@@ -160,15 +162,15 @@ const questions = [
         title: "Let us change the background color 🖍! How should we change the first line? 1️⃣ How should it look like? 💁🏼‍",
         type: "multi_choice",
         branches: [{
-            answer: "<div style=\"background‐color: {{q010}}\">",
+            answer: "<div style=\"background‐color: green;\">",
             next_question: "q013",
         },
         {
-            answer: "<div style=\"background‐color: pink\">",
+            answer: "<div style=\"background‐color: pink;\">",
             next_question: "q012",
         },
         {
-            answer: "<div style=\"red\">",
+            answer: "<div style=\"green\">",
             next_question: "q012",
         }]
     }),
@@ -177,11 +179,11 @@ const questions = [
         title: "No, that's not quite right. Try again! 🙂",
         type: "multi_choice",
         branches: [{
-            answer: "<div style=\"background‐color: {{q010}}\">",
+            answer: "<div style=\"background‐color: green;\">",
             next_question: "q013",
         },
         {
-            answer: "<div style=\"background‐color: pink\">",
+            answer: "<div style=\"background‐color: pink;\">",
             next_question: "q012",
         },
         {
@@ -203,11 +205,28 @@ const questions = [
         title: "Here's how the code looks like after our change:",
         type: "code",
         code: `
-            <div style="background-color: beige;">
-                <h1>{{q001}}</h1>
-                <img src="{{q001}}" />
+            <div style="background-color: green;">
+                <h1>Dogs</h1>
+                <img src="https://tinyurl.com/y2shswoe" />
             </div>
         `,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520green%25253B%252522%25253E%25250A%252520%252520%252520%25253Ch1%25253EDogs%25253C%25252Fh1%25253E%25250A%252520%252520%252520%25253Cimg%252520src%25253D%252522https%25253A%25252F%25252Ftinyurl.com%25252Fy2shswoe%252522%252520%25252F%25253E%25250A%25253C%25252Fdiv%25253E',
+        branches: [{
+            answer: null,
+            next_question: "q400",
+        }]
+    }),
+    new Question({
+        id: "q400",
+        title: "And this is the homepage for you:",
+        type: "preview",
+        code: `
+            <div style="background-color: green;">
+                <h1>Dogs</h1>
+                <img src="https://tinyurl.com/y2shswoe" />
+            </div>
+        `,
+        url: '',
         branches: [{
             answer: null,
             next_question: "q015",
@@ -291,6 +310,7 @@ const questions = [
         title: "Here is how it looks. 👀",
         type: "preview",
         code: `<div></div>`,
+        url: '',
         branches: [{
             answer: null,
             next_question: "q024",
@@ -308,18 +328,29 @@ const questions = [
     new Question({
         id: "q025",
         title: "Well, let's add some color 🖍, which color do you want?",
-        type: "free_text",
-        branches: [{
-            answer: "",
-            next_question: "q026",
-        }]
+        type: "multi_choice",
+        branches: [
+            {
+                answer: "blue",
+                next_question: "q026",
+            },
+            {
+                answer: "red",
+                next_question: "q026",
+            },
+            {
+                answer: "yellow",  // pick this one!
+                next_question: "q026",
+            },
+    ]
     }),
     new Question({
         id: "q026",
         title: "You're the boss! 👷‍ The code is as below.",
         type: "code",
-        code: `<div style="background-color: {{q025}}" >
+        code: `<div style="background-color: yellow;" >
         </div>`,
+        url: 'https://carbon.now.sh/embed/?bg=rgba(171%252C%2520184%252C%2520195%252C%25201)&t=material&wt=none&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fm=Hack&fs=14px&lh=133%2525&si=false&es=2x&wm=false&code=%25253Cdiv%252520style%25253D%252522background-color%25253A%252520yellow%25253B%252522%25253E%25250A%25253C%25252Fdiv%25253E',
         branches: [{
             answer: null,
             next_question: "q027",
