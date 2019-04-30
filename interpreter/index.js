@@ -86,8 +86,7 @@ const runLesson = async (sender_psid, received_message) => {
             case 'code':
                 newProgress = question.branches[0].next_question;
                 currentLesson.progress = newProgress;
-                var {url} = await codeAsImage(question.code);
-                response = constructImageResponse(question.title, url);
+                response = constructImageResponse(question.title, question.url);
                 await user.save();
                 return { response, type: question.type };
             case 'preview':
@@ -95,7 +94,7 @@ const runLesson = async (sender_psid, received_message) => {
                 currentLesson.progress = newProgress;
                 var html = fill(question.code, currentLesson.answers);
                 await htmlAsImage(html);
-                response = constructImageResponse(fill(question.title, currentLesson.answers), imagePath(question.code));
+                response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
                 return { response, type: question.type };
             case 'informative':

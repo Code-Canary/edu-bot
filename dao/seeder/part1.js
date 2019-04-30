@@ -60,7 +60,7 @@ const questions = [
                 <img src="https://tinyurl.com/y2shswoe" />
             </div>
         `,
-        url: '',
+        url: 'https://github.com/f8-icode/f8-I-Code/blob/master/examples/q003.png?raw=true',
         branches: [{
             answer: null,
             next_question: "q004",
@@ -226,7 +226,7 @@ const questions = [
                 <img src="https://tinyurl.com/y2shswoe" />
             </div>
         `,
-        url: '',
+        url: 'https://github.com/f8-icode/f8-I-Code/blob/master/examples/q400.png?raw=true',
         branches: [{
             answer: null,
             next_question: "q015",
@@ -310,7 +310,7 @@ const questions = [
         title: "Here is how it looks. 👀",
         type: "preview",
         code: `<div></div>`,
-        url: '',
+        url: 'https://github.com/f8-icode/f8-I-Code/blob/master/examples/q023.png?raw=true',
         branches: [{
             answer: null,
             next_question: "q024",
