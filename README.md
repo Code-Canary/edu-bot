@@ -37,12 +37,12 @@ Insight into content development for coding instruction
 - Enabling the learners to publish the homepage they develop so as to market themselves
 
 ## Built With
-- node.js
-- javascript
-- messenger
-- heroku
-- github
-- fb-graph-api
+- Node.js
+- JavaScript
+- Facebook Messenger API
+- Heroku
+- GitHub
+- Facebook Graph API
 
 ## Try it out
 - [Web page](https://codecanary.now.sh/)
