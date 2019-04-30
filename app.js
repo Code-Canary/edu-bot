@@ -36,8 +36,8 @@ app.get('/webhook', APIController.verifyServer);
 app.post('/webhook', APIController.handleWebhookEvent);
 
 // Handles rendering of the user homepage
-app.get('/render', function(req, res) {
-  APIController.renderHtml(req, res, User);
+app.get('/render', function (req, res) {
+    APIController.renderHtml(req, res, User);
 });
 
 // Sets server port and logs message on success
