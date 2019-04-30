@@ -4,7 +4,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const User = require("../dao/models/user");
 const { Lesson } = require('../dao/models/lesson');
 const { Question } = require('../dao/models/question');
-const { quickReply } = require('../service/messageTemplates');
+const { quickReply, list } = require('../service/messageTemplates');
 const messengerService = require('../service/messengerService');
 const MessageTemplates = require('../service/messageTemplates');
 
@@ -108,6 +108,7 @@ const runLesson = async (sender_psid, received_message) => {
                 return { response, type: question.type };
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
+                var correctBranch = question.branches.find(branch => branch.answer === userInput);
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
@@ -118,6 +119,16 @@ const runLesson = async (sender_psid, received_message) => {
             // } else {
             //     return defaultResponse;
             // }
+            case 'multi_choice':
+                currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
+                // let filterQuestion = question;
+                // filterQuestion.title = fill(question.title, currentLesson.answers);
+                response = list(question.title, question.branches);
+                question = await Question.findOne({ id: question.branches[0].next_question });
+                newProgress = question.id;
+                currentLesson.progress = newProgress;
+                await user.save();
+                return { response, type: question.type };
             default:
                 /**
                  * TODO: Two or more answers for the question, the question type should be evaluated and
