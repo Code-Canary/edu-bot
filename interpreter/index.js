@@ -20,8 +20,7 @@ const constructImageResponse = (title, image_url) => {
             "type": "image",
             "payload": {
                 "url": image_url,
-                "is_reusable": true
-                //"subtitle":"<SUBTITLE_TEXT>", //TODO: maybe this is better than title?
+                "is_reusable": false
             }
         }
     }

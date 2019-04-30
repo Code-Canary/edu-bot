@@ -123,7 +123,6 @@ function callSendAPI(userMessage) {
 
 function constructResponseMessage(sender_psid, response) {
     return {
-        "messaging_type": "RESPONSE",
         "recipient": {
             "id": sender_psid,
         },
