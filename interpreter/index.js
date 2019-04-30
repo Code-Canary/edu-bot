@@ -79,17 +79,19 @@ const runLesson = async (sender_psid, received_message) => {
         switch (question.type) {
             //TODO: imagePath may need domain prepended...
             case 'code':
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructImageResponse(question.title, question.url);
                 await user.save();
-                return { response, type: question.type };
+                return { response, type: 'informative' };
             case 'preview':
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
                 currentLesson.progress = newProgress;
                 response = constructImageResponse(fill(question.title, currentLesson.answers), question.url);
                 await user.save();
-                return { response, type: question.type };
+                return { response, type: 'informative' };
             case 'informative':
                 question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.id;
