@@ -60,7 +60,8 @@ console.log(
 const runLesson = async (sender_psid, received_message) => {
     const userInput = received_message.text;
     const defaultResponse = constructTextResponse("Sorry, I don't understand that answer.");
-    const user = await User.findOne({ sender_psid: sender_psid }).exec();
+
+    const user = await User.findOne({ sender_psid: sender_psid });
 
     var response = {};
 
@@ -82,9 +83,7 @@ const runLesson = async (sender_psid, received_message) => {
             case 'free_text':
                 // if (userInput === question.branches[0].answer) {
                 currentLesson.answers.push({ value: userInput, questionId: currentProgress, question: question._id });
-                if (currentProgress === "q001") {
-                    question = await Question.findOne({ id: question.branches[0].next_question });
-                }
+                question = await Question.findOne({ id: question.branches[0].next_question });
                 newProgress = question.branches[0].next_question;
 
                 currentLesson.progress = newProgress;
