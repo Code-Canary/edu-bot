@@ -1,6 +1,7 @@
 'use strict';
 
 require('dotenv').config();
+const BootBot = require('bootbot');
 
 /**
  * DAO Section
@@ -30,6 +31,13 @@ const
     express = require('express'),
     body_parser = require('body-parser'),
     app = express().use(body_parser.json()); // creates express http server
+
+const bot = new BootBot({
+    accessToken: config.get('accessToken'),
+    verifyToken: config.get('verifyToken'),
+    appSecret: config.get('appSecret')
+});
+
 
 // Webhook BOT routes
 app.get('/webhook', APIController.verifyServer);
