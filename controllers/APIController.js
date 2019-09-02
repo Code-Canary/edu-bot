@@ -125,6 +125,7 @@ function handleWebhookEvent(req, res) {
 
 module.exports = {
     verifyServer: verifyServer,
-    handleWebhookEvent: handleWebhookEvent,
+    handleWebhookEvent,
+    setupUserConversation,
     renderHtml
 }
