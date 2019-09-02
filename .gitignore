@@ -1,7 +1,12 @@
 node_modules
 **/.env
+
+# OSX
 **/.DS_Store
+
+# Editors
 .idea
 .vscode/
 
+# Assets
 generated/*.png
