@@ -1,7 +1,7 @@
 # Code Canary
 
 <p align="center">
-<img src="https://i.imgur.com/L8gxQk0.png" alt="logo" height=200/>
+    <img src="https://i.imgur.com/L8gxQk0.png" alt="logo" height=200/>
 </p>
 
 
@@ -22,6 +22,22 @@ Interactive learning 👩🏼‍🎓 for youths and children 🧒🏽🧒🏽 wh
 npm start
 ```
 
+1. Create an `.env` file and fill in the values.
+
+    - Run `cp .env.example .env` to create a `.env` file.
+    - Go to [https://developers.facebook.com/](), login and copy the messenger credentials.
+    - Take `mongodb://localhost:27017/codeCanary` as the default value for `MONGODB_URI`.
+
+2. Start the development server - this will start a mongodb server
+
+    ```bash
+    yarn start
+    ```
+
+## Code
+
+`DAO`: `Data Access Object`
+
 ## Inspiration
 Code Canary provides early access to technological empowerment for youths who do not have access to formal training, computers and internet.
 
@@ -41,7 +57,7 @@ Moreover, mobile service providers in Africa offer cheap bundles to support acce
 
 The bot was divided into services such as the database, assignment service, messaging services, NLP which were assigned to different team members to develop and bring together. A demo version/prototype was hosted for review and redesigned before publishing the final version.
 
-## Challenges we ran into
+### Challenges we ran into
 Learning how to use the messenger bot was a challenge as none of the team members was conversant with it.
 Given the contextual variations, adapting the NLP to user responses was a challenge
 Designing the interactive flow for meaningful user experience was a challenge
@@ -55,12 +71,13 @@ Building a messenger bot
 * Insight into the 4 SDGs and the implications for tech solutions
 * Insight into content development for coding instruction
 
-## What's next for Code Canary
+### What's next for Code Canary
 - Make the bot more engaging and interactive
 - Advancing the content level from basic programming
 - Enabling the learners to publish the homepage they develop so as to market themselves
 
-## Built With
+### Built With
+
 - Node.js
 - JavaScript
 - Facebook Messenger API
@@ -69,5 +86,6 @@ Building a messenger bot
 - Facebook Graph API
 
 ## Try it out
+
 - [Website](https://codecanary.now.sh/)
 - [F8 Hackathon submission page](https://devpost.com/software/icode)

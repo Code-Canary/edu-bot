@@ -44,6 +44,38 @@ function verifyServer(req, res) {
     }
 }
 
+function setupUserConversation(bot) {
+    bot.hear('ask me something', (payload, chat) => {
+
+        const askName = (convo) => {
+            convo.ask(`What's your name?`, (payload, convo) => {
+                const text = payload.message.text;
+                convo.set('name', text);
+                convo.say(`Oh, your name is ${text}`).then(() => askFavoriteFood(convo));
+            });
+        };
+
+        const askFavoriteFood = (convo) => {
+            convo.ask(`What's your favorite food?`, (payload, convo) => {
+                const text = payload.message.text;
+                convo.set('food', text);
+                convo.say(`Got it, your favorite food is ${text}`).then(() => sendSummary(convo));
+            });
+        };
+
+        const sendSummary = (convo) => {
+            convo.say(`Ok, here's what you told me about you:
+              - Name: ${convo.get('name')}
+              - Favorite Food: ${convo.get('food')}`);
+            convo.end();
+        };
+
+        chat.conversation((convo) => {
+            askName(convo);
+        });
+    });
+}
+
 function handleWebhookEvent(req, res) {
 
     // Parse the request body from the POST
@@ -93,6 +125,7 @@ function handleWebhookEvent(req, res) {
 
 module.exports = {
     verifyServer: verifyServer,
-    handleWebhookEvent: handleWebhookEvent,
+    handleWebhookEvent,
+    setupUserConversation,
     renderHtml
 }
